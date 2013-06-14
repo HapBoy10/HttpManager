@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WYViewController : UIViewController
+
+#import "WYHttpRequest.h"
+@interface WYViewController : UIViewController<WYHttpRequestDelegate>
 
 @end

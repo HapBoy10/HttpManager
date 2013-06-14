@@ -18,6 +18,7 @@
 		5FCC7ED8176AAE3D00BFEE3A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FCC7ED7176AAE3D00BFEE3A /* Default-568h@2x.png */; };
 		5FCC7EDB176AAE3D00BFEE3A /* WYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC7EDA176AAE3D00BFEE3A /* WYViewController.m */; };
 		5FCC7EDE176AAE3D00BFEE3A /* WYViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FCC7EDC176AAE3D00BFEE3A /* WYViewController.xib */; };
+		5FCC7EE6176AAEE800BFEE3A /* WYHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC7EE5176AAEE800BFEE3A /* WYHttpRequest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,8 @@
 		5FCC7ED9176AAE3D00BFEE3A /* WYViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WYViewController.h; sourceTree = "<group>"; };
 		5FCC7EDA176AAE3D00BFEE3A /* WYViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WYViewController.m; sourceTree = "<group>"; };
 		5FCC7EDD176AAE3D00BFEE3A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WYViewController.xib; sourceTree = "<group>"; };
+		5FCC7EE4176AAEE800BFEE3A /* WYHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYHttpRequest.h; sourceTree = "<group>"; };
+		5FCC7EE5176AAEE800BFEE3A /* WYHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYHttpRequest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +92,8 @@
 				5FCC7EDA176AAE3D00BFEE3A /* WYViewController.m */,
 				5FCC7EDC176AAE3D00BFEE3A /* WYViewController.xib */,
 				5FCC7EC8176AAE3C00BFEE3A /* Supporting Files */,
+				5FCC7EE4176AAEE800BFEE3A /* WYHttpRequest.h */,
+				5FCC7EE5176AAEE800BFEE3A /* WYHttpRequest.m */,
 			);
 			path = HttpManager;
 			sourceTree = "<group>";
@@ -177,6 +182,7 @@
 				5FCC7ECE176AAE3C00BFEE3A /* main.m in Sources */,
 				5FCC7ED2176AAE3D00BFEE3A /* WYAppDelegate.m in Sources */,
 				5FCC7EDB176AAE3D00BFEE3A /* WYViewController.m in Sources */,
+				5FCC7EE6176AAEE800BFEE3A /* WYHttpRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +264,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HttpManager/HttpManager-Prefix.pch";
 				INFOPLIST_FILE = "HttpManager/HttpManager-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -269,6 +276,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HttpManager/HttpManager-Prefix.pch";
 				INFOPLIST_FILE = "HttpManager/HttpManager-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
