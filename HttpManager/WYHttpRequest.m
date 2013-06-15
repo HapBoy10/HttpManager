@@ -26,6 +26,7 @@ static NSOperationQueue *g_queue = nil;
 @synthesize requestBodyData = _requestBodyData;
 @synthesize rspMutableData = _rspMutableData;
 @synthesize total = _total;
+@synthesize rspCode = _rspCode;
 
 -(id)init{
 	if(self == [super init]){
@@ -79,6 +80,11 @@ static NSOperationQueue *g_queue = nil;
     
     [g_queue cancelAllOperations];
 }
+-(void)setHeadInfo :(NSMutableURLRequest*)request{
+    if(_requestBodyData.length && _requestBodyData != nil){
+        [_request setHTTPBody:(NSData*)_requestBodyData];
+    }
+}
 
 
 //测试post数据、
@@ -86,8 +92,8 @@ static NSOperationQueue *g_queue = nil;
 	
     _request = [NSMutableURLRequest requestWithURL:_requestURL cachePolicy:NSURLCacheStorageAllowed timeoutInterval:[self requestTimeOut]];
     [_request setHTTPMethod:_requestMethod];
-    [_request setHTTPBody:(NSData*)_requestBodyData];
     
+    [self setHeadInfo:_request];
     if(![self isCancelled]){
         
         _requestConnection = [[NSURLConnection alloc] initWithRequest:_request delegate:self startImmediately:_startImmediately];
@@ -97,10 +103,11 @@ static NSOperationQueue *g_queue = nil;
     }    
 }
 
-
+//接受到响应
 -(void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response{
-    NSLog(@"didReceiveResponse");
     
+    _rspCode = [((NSHTTPURLResponse *)response) statusCode];
+    NSDictionary *dic = [((NSHTTPURLResponse *)response) allHeaderFields];
     //判断请求数据是否为空
     if(![response respondsToSelector:@selector(statusCode)] || [((NSHTTPURLResponse *)response) statusCode] < 400){
         _total = [response expectedContentLength] > 0 ? [response expectedContentLength] : 0;
@@ -120,10 +127,10 @@ static NSOperationQueue *g_queue = nil;
             failedBlock();
     }    
 }
-
+//请求失败
 -(void)connection:(NSURLConnection*)connection didFailWithError:(NSError *)error
 {
-    NSLog(@"didFailWithError:%@,%@",error,_request.URL);
+    _rspCode = error.code;
     if([_delegate respondsToSelector:@selector(requestFailed:didFailWithError:)])
         [_delegate requestFailed:self didFailWithError:error];
     
@@ -131,22 +138,24 @@ static NSOperationQueue *g_queue = nil;
         failedBlock();
 }
 
+//接受到数据
 -(void)connection:(NSURLConnection*)connection didReceiveData:(NSData *)data{
     
     [_rspMutableData appendData:data];
-    if([_delegate respondsToSelector:@selector(requestRcvData:didReceiveData:curTotal:)])
-        [_delegate requestRcvData:self didReceiveData:data curTotal:_rspMutableData];
+    if([_delegate respondsToSelector:@selector(requestRcvData:didReceiveData:curlength:total:)])
+        [_delegate requestRcvData:self didReceiveData:data curlength:_rspMutableData.length total:_total];
     
     if(receivedBlock){
-        receivedBlock(data,_rspMutableData);
+        receivedBlock(data,_rspMutableData.length,_total);
     }
-    NSLog(@"didReceiveData:%@,%d",_request.URL,_rspMutableData.length);
 }
 
+//数据接收完成
 -(void)connectionDidFinishLoading:(NSURLConnection*)connection{
-    NSLog(@"connectionDidFinishLoading:%@",_request.URL);
+    
     if([_delegate respondsToSelector:@selector(requestFinish:totalData:)])
         [_delegate requestFinish:self totalData:_rspMutableData];
+    
     if(completionBlock)
         completionBlock();
 }

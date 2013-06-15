@@ -28,32 +28,54 @@ static NSOperationQueue *g_queue = nil;
 {
     [super viewDidLoad];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:imageView];
-
-    [[WYImageDownload shareInstance] downLoadWithURL:[NSURL URLWithString:@"http://img3.douban.com/icon/g289842-3.jpg"]  converTosize:CGSizeZero delegate:self completion:^(UIImage *image) {
-        imageView.image = image;
-    } failure:^{
-        NSLog(@"shibai");
-    } received:^(long long total) {
-        NSLog(@"fuck");
-    }];
-    
-    
-    NSLog(@"%@,%d",@"tangwei",[@"tangwei" hash]);
-    
-    return;
+//    CGRect frame = self.view.bounds;
+//    
+//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width / 3, frame.size.height / 3)];
+//    [self.view addSubview:imageView];
+//
+//    [[WYImageDownload shareInstance] downLoadWithURL:[NSURL URLWithString:@"http://img3.douban.com/icon/g289842-3.jpg"]  converTosize:CGSizeZero delegate:self completion:^(UIImage *image) {
+//        imageView.alpha = 0;
+//        imageView.image = image;
+//        [UIView animateWithDuration:5 animations:^{
+//            imageView.alpha = 1.0;
+//        }];
+//
+//    } failure:^{
+//        NSLog(@"shibai");
+//    } received:^(long long total) {
+//        NSLog(@"fuck");
+//    }];
+//    
+//    UIImageView *imageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(0,20 + frame.size.height / 3, frame.size.width / 3, frame.size.height / 3)];
+//    [self.view addSubview:imageView2];
+//    
+//    [[WYImageDownload shareInstance] downLoadWithURL:[NSURL URLWithString:@"http://img3.douban.com/icon/g289842-3.jpg"]  converTosize:CGSizeZero delegate:self completion:^(UIImage *image) {
+//        imageView2.alpha = 0;
+//        imageView2.image = image;
+//        [UIView animateWithDuration:5 animations:^{
+//            imageView2.alpha = 1.0;
+//        }];
+//
+//    } failure:^{
+//        NSLog(@"shibai");
+//    } received:^(long long total) {
+//        NSLog(@"fuck");
+//    }];
+//    
+//    return;
     g_queue = [[NSOperationQueue alloc] init];
     [g_queue setMaxConcurrentOperationCount:2];
 	// Do any additional setup after loading the view, typically from a nib.
     WYHttpRequest *request = [WYHttpRequest requestWithURL:[NSURL URLWithString:@"http://img3.douban.com/icon/g289842-3.jpg"]];
-    request.delegate = self;
+    NSData *d = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://img3.douban.com/icon/g289842-3.jpg"]];
+    [request setRequestBodyData:(NSMutableData*)d];
+    [request setRequestMethod:@"POST"];
     
     [request setCompletionBlock:^{
         NSLog(@"tangwei");
     }];
-    [request setReceivedBlock:^(NSData *data, NSMutableData *total) {
-        NSLog(@"%d,%d",data.length,total.length);
+    [request setReceivedBlock:^(NSData *data, long long curlength, long long total) {
+        NSLog(@"");
     }];
     
     [request setFailedBlock:^{
@@ -79,16 +101,16 @@ static NSOperationQueue *g_queue = nil;
 //    [request requestStart];
 //}
 
-//-(void)requestFinish:(WYHttpRequest *)request totalData:(NSMutableData *)data{
-//
-//}
-//-(void)requestFailed:(WYHttpRequest *)request didFailWithError:(NSError *)error{
-//
-//}
-//
-//-(void)requestRcvData:(WYHttpRequest *)request didReceiveData:(NSData *)data curTotal:(NSMutableData *)curTotal{
-//
-//}
+-(void)requestFinish:(WYHttpRequest *)request totalData:(NSMutableData *)data{
+
+}
+-(void)requestFailed:(WYHttpRequest *)request didFailWithError:(NSError *)error{
+
+}
+
+-(void)requestRcvData:(WYHttpRequest *)request didReceiveData:(NSData *)data curTotal:(NSMutableData *)curTotal{
+
+}
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
