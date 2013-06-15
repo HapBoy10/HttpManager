@@ -19,6 +19,7 @@
 		5FCC7EDB176AAE3D00BFEE3A /* WYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC7EDA176AAE3D00BFEE3A /* WYViewController.m */; };
 		5FCC7EDE176AAE3D00BFEE3A /* WYViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FCC7EDC176AAE3D00BFEE3A /* WYViewController.xib */; };
 		5FCC7EE6176AAEE800BFEE3A /* WYHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC7EE5176AAEE800BFEE3A /* WYHttpRequest.m */; };
+		E2CE17C6176BF7EA00BCDBE7 /* WYImageDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CE17C5176BF7EA00BCDBE7 /* WYImageDownload.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,8 @@
 		5FCC7EDD176AAE3D00BFEE3A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WYViewController.xib; sourceTree = "<group>"; };
 		5FCC7EE4176AAEE800BFEE3A /* WYHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYHttpRequest.h; sourceTree = "<group>"; };
 		5FCC7EE5176AAEE800BFEE3A /* WYHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYHttpRequest.m; sourceTree = "<group>"; };
+		E2CE17C4176BF7EA00BCDBE7 /* WYImageDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYImageDownload.h; sourceTree = "<group>"; };
+		E2CE17C5176BF7EA00BCDBE7 /* WYImageDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYImageDownload.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,14 +89,13 @@
 		5FCC7EC7176AAE3C00BFEE3A /* HttpManager */ = {
 			isa = PBXGroup;
 			children = (
+				E2CE17C1176BE80F00BCDBE7 /* WYHttp */,
 				5FCC7ED0176AAE3D00BFEE3A /* WYAppDelegate.h */,
 				5FCC7ED1176AAE3D00BFEE3A /* WYAppDelegate.m */,
 				5FCC7ED9176AAE3D00BFEE3A /* WYViewController.h */,
 				5FCC7EDA176AAE3D00BFEE3A /* WYViewController.m */,
 				5FCC7EDC176AAE3D00BFEE3A /* WYViewController.xib */,
 				5FCC7EC8176AAE3C00BFEE3A /* Supporting Files */,
-				5FCC7EE4176AAEE800BFEE3A /* WYHttpRequest.h */,
-				5FCC7EE5176AAEE800BFEE3A /* WYHttpRequest.m */,
 			);
 			path = HttpManager;
 			sourceTree = "<group>";
@@ -110,6 +112,17 @@
 				5FCC7ED7176AAE3D00BFEE3A /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E2CE17C1176BE80F00BCDBE7 /* WYHttp */ = {
+			isa = PBXGroup;
+			children = (
+				5FCC7EE4176AAEE800BFEE3A /* WYHttpRequest.h */,
+				5FCC7EE5176AAEE800BFEE3A /* WYHttpRequest.m */,
+				E2CE17C4176BF7EA00BCDBE7 /* WYImageDownload.h */,
+				E2CE17C5176BF7EA00BCDBE7 /* WYImageDownload.m */,
+			);
+			name = WYHttp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,6 +196,7 @@
 				5FCC7ED2176AAE3D00BFEE3A /* WYAppDelegate.m in Sources */,
 				5FCC7EDB176AAE3D00BFEE3A /* WYViewController.m in Sources */,
 				5FCC7EE6176AAEE800BFEE3A /* WYHttpRequest.m in Sources */,
+				E2CE17C6176BF7EA00BCDBE7 /* WYImageDownload.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +315,7 @@
 				5FCC7EE3176AAE3D00BFEE3A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
