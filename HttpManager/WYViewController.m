@@ -9,6 +9,7 @@
 #import "WYViewController.h"
 #import "WYHttpRequest.h"
 #import "WYImageDownload.h"
+#import <sys/sysctl.h>
 
 
 static NSOperationQueue *g_queue = nil;
@@ -20,6 +21,12 @@ static NSOperationQueue *g_queue = nil;
 
 @implementation WYViewController
 
+#define MYBASICURL @"http://61.155.169.165/pusher/"
+
+#define POSTDEVICE MYBASICURL @"ws/device/add"  //设备信息报备
+
+#define AppKey  @"27e1615212f3c6ea846ed6c412df1361ce97f006ee20bb5aa2483a3b61d5cadd"
+
 -(void)imageDownloadDidFinish:(WYImageDownload *)download{
 
 }
@@ -27,42 +34,88 @@ static NSOperationQueue *g_queue = nil;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSURL * url=[NSURL URLWithString:POSTDEVICE];
+    __weak WYHttpRequest *request1 = [WYHttpRequest requestWithURL:url];
     
-//    CGRect frame = self.view.bounds;
-//    
-//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width / 3, frame.size.height / 3)];
-//    [self.view addSubview:imageView];
-//
-//    [[WYImageDownload shareInstance] downLoadWithURL:[NSURL URLWithString:@"http://img3.douban.com/icon/g289842-3.jpg"]  converTosize:CGSizeZero delegate:self completion:^(UIImage *image) {
-//        imageView.alpha = 0;
-//        imageView.image = image;
-//        [UIView animateWithDuration:5 animations:^{
-//            imageView.alpha = 1.0;
-//        }];
-//
-//    } failure:^{
-//        NSLog(@"shibai");
-//    } received:^(long long total) {
-//        NSLog(@"fuck");
-//    }];
-//    
-//    UIImageView *imageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(0,20 + frame.size.height / 3, frame.size.width / 3, frame.size.height / 3)];
-//    [self.view addSubview:imageView2];
-//    
-//    [[WYImageDownload shareInstance] downLoadWithURL:[NSURL URLWithString:@"http://img3.douban.com/icon/g289842-3.jpg"]  converTosize:CGSizeZero delegate:self completion:^(UIImage *image) {
-//        imageView2.alpha = 0;
-//        imageView2.image = image;
-//        [UIView animateWithDuration:5 animations:^{
-//            imageView2.alpha = 1.0;
-//        }];
-//
-//    } failure:^{
-//        NSLog(@"shibai");
-//    } received:^(long long total) {
-//        NSLog(@"fuck");
-//    }];
-//    
-//    return;
+
+    
+    NSDictionary * dic=[NSDictionary dictionaryWithObjectsAndKeys:
+                        AppKey,@"header.appKey",
+                        @"deviceToken",@"body.deviceId",
+                        [self deviceId],@"body.deviceToken",
+                        [self terminal],@"body.terminal",
+                        [self deviceType],@"body.deviceType",
+                        [self model],@"body.mode",
+                        [self resolution],@"body.resolution",
+                        [self network],@"body.netWorkType",
+                        [self carrier],@"body.operator",
+                        [self cpuSeria],@"body.cpuSerial",
+                        [self brand],@"body.brand",
+                        [self PhoneNumber],@"body.phoneNumbers",
+                        nil];
+    
+    NSArray *keys = [dic allKeys];
+    NSArray *values = [dic allValues];
+    /*
+    
+    NSMutableURLRequest *myRequest=[NSMutableURLRequest requestWithURL:url];//创建一个指向目的网站的请求
+    NSString *myBoundary=@"0xKhTmLbOuNdArY";//这个很重要，用于区别输入的域
+    NSString *myContent=[NSString stringWithFormat:@"multipart/form-data;boundary=%@",myBoundary];//意思是要提交的是表单数据
+    
+    [myRequest setValue:myContent forHTTPHeaderField:@"Content-type"];//定义内容类型
+    
+    NSMutableData * body=[NSMutableData data];//这个用于暂存你要提交的数据
+    //下面开始增加你的数据了
+    
+    //我这里假设表单中，有两个字段，一个叫user,一个叫password
+    
+    //字段与字段之间要用到boundary分开
+    
+    [body appendData:[[NSString stringWithFormat:@"\n--%@\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//表示开始
+    
+    NSString *endItemBoundary = [NSString stringWithFormat:@"\r\n--%@\r\n",myBoundary];
+    for (int i = 0; i < keys.count; i++) {
+        
+        NSLog(@"key=%@,value=%@",[keys objectAtIndex:i],[values objectAtIndex:i]);
+        
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",[keys objectAtIndex:i]] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [body appendData:[[values objectAtIndex:i] dataUsingEncoding:NSUTF8StringEncoding]]; 
+        
+        if(i != keys.count - 1)
+            [body appendData:[endItemBoundary dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+
+    
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//结束
+    
+    [myRequest setHTTPMethod:@"POST"];
+    [myRequest setHTTPBody:body];
+    NSError *error;
+    NSData *respondse=[NSURLConnection sendSynchronousRequest:myRequest returningResponse:nil error:&error];//创建连接
+    
+    NSString * myGet=[[NSString alloc] initWithData:respondse encoding:NSUTF8StringEncoding];//接收数据
+    NSLog(@"%@,%@",myGet,error);
+    return;
+    */
+    
+    for (int i = 0 ; i < keys.count; i++) {
+        [request1 setPostValue:[values objectAtIndex:i] forKey:[keys objectAtIndex:i]];
+    }
+    
+    [request1 setCompletionBlock:^{
+        NSLog(@"success:%@",[[NSString alloc] initWithData:request1.rspMutableData encoding:NSUTF8StringEncoding]);
+    }];
+    
+    
+    [request1 setFailedBlock:^{
+        NSLog(@"Failed");
+    }];
+    
+    [request1 requestStart];
+    
+    return;
+   
     g_queue = [[NSOperationQueue alloc] init];
     [g_queue setMaxConcurrentOperationCount:2];
 	// Do any additional setup after loading the view, typically from a nib.
@@ -134,6 +187,71 @@ static NSOperationQueue *g_queue = nil;
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+//基本信息采集
+-(NSString*)cpuSeria{
+    return @"ceshi";
+}
+-(NSString *)network{
+    
+    return @"Wifi";
+}
+-(NSString*)carrier{
+
+    return @"ceshi";
+}
+-(NSString *)deviceType{
+    
+    return  @"Ios";
+}
+-(NSString *)sdkVersion{
+    return [[UIDevice currentDevice]systemVersion];
+}
+-(NSString *)resolution{
+    CGRect rect_screen = [[UIScreen mainScreen]bounds];
+    CGSize size_screen = rect_screen.size;
+    CGFloat scale_screen = [UIScreen mainScreen].scale;
+    return [NSString stringWithFormat:@"%f",size_screen.width*size_screen.height*scale_screen];
+}
+-(NSString *)uid{
+
+    return @"uid";
+}
+-(NSString *)model{
+    
+    return [[UIDevice currentDevice]model];
+}
+-(NSString *)cpu{
+    return @"cpu";
+}
+-(NSString *)deviceId{
+    
+    return @"OpenUDID";
+}
+-(NSString *)PhoneNumber{
+    //获取电话号码
+    return  [[NSUserDefaults standardUserDefaults] objectForKey:@"SBFormattedPhoneNumber"];
+}
+-(NSString *)terminal{
+    size_t size;
+    int nR = sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    char *machine = (char *)malloc(size);
+    nR = sysctlbyname("hw.machine", machine, &size, NULL, 0);
+    NSString *platform = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
+    free(machine);
+    
+    NSRange loc=[platform rangeOfString:@"iPod"];
+    if(loc.location!=NSNotFound){
+        return @"Pad";
+    }
+    else{
+        return @"Mobile";
+    }
+}
+-(NSString *)brand{
+    return @"IPhone";
 }
 
 @end

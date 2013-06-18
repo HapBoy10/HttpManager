@@ -54,6 +54,9 @@ typedef void (^WYHttpDataBlock)(NSData *data ,long long curlength,long long tota
 -(void)setCompletionBlock:(WYHttpBasicBlock)aBlock;
 -(void)setFailedBlock:(WYHttpBasicBlock)aBlock;
 
+- (void)setPostValue:(id <NSObject>)value forKey:(NSString *)key;
+- (void)addPostValue:(id <NSObject>)value forKey:(NSString *)key;
+
 
 #pragma mark
 #pragma mark method
