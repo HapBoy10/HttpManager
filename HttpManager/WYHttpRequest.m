@@ -13,10 +13,11 @@ static NSOperationQueue *g_queue = nil;
 
 @implementation WYHttpRequest{
     
-    
-    
     NSMutableURLRequest *_request;
     NSURLConnection *_requestConnection;
+    
+    NSMutableArray *_postData;
+    unsigned long long _postLength;
 }
 
 
@@ -30,8 +31,13 @@ static NSOperationQueue *g_queue = nil;
 -(id)init{
 	if(self == [super init]){
 		_rspMutableData = [NSMutableData data];
+        _requestBodyData = [NSMutableData data];
+        
+        
+        _postData = [NSMutableArray array];
         _requestMethod = @"GET";
         _startImmediately = YES;
+        _postLength = 0;
         _requestTimeOut = 30.0f;
         
         g_queue = [[NSOperationQueue alloc] init];
@@ -85,8 +91,20 @@ static NSOperationQueue *g_queue = nil;
 -(void)main{
 	
     _request = [NSMutableURLRequest requestWithURL:_requestURL cachePolicy:NSURLCacheStorageAllowed timeoutInterval:[self requestTimeOut]];
+    
+    [self buildPostBody];
+    
+//    _postLength = [self setPostLength];
+    
+    if(_requestBodyData.length > 0){
+    
+        if([_requestMethod isEqualToString:@"GET"])
+            _requestMethod = @"POST";
+        
+        [_request setHTTPBody:_requestBodyData];
+    }
+    
     [_request setHTTPMethod:_requestMethod];
-    [_request setHTTPBody:(NSData*)_requestBodyData];
     
     if(![self isCancelled]){
         
@@ -99,8 +117,8 @@ static NSOperationQueue *g_queue = nil;
 
 
 -(void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response{
-    NSLog(@"didReceiveResponse");
-    
+//    NSLog(@"didReceiveResponse:%@,%d",((NSHTTPURLResponse *)response).allHeaderFields,[((NSHTTPURLResponse *)response) statusCode]);
+    return;
     //判断请求数据是否为空
     if(![response respondsToSelector:@selector(statusCode)] || [((NSHTTPURLResponse *)response) statusCode] < 400){
         _total = [response expectedContentLength] > 0 ? [response expectedContentLength] : 0;
@@ -121,8 +139,7 @@ static NSOperationQueue *g_queue = nil;
     }    
 }
 
--(void)connection:(NSURLConnection*)connection didFailWithError:(NSError *)error
-{
+-(void)connection:(NSURLConnection*)connection didFailWithError:(NSError *)error{
     NSLog(@"didFailWithError:%@,%@",error,_request.URL);
     if([_delegate respondsToSelector:@selector(requestFailed:didFailWithError:)])
         [_delegate requestFailed:self didFailWithError:error];
@@ -151,6 +168,79 @@ static NSOperationQueue *g_queue = nil;
         completionBlock();
 }
 
+- (void)addPostValue:(id <NSObject>)value forKey:(NSString *)key{
+	if (!key) {
+		return;
+	}
+	if (!_postData) {
+        _postData = [NSMutableArray array];
+	}
+	NSMutableDictionary *keyValuePair = [NSMutableDictionary dictionaryWithCapacity:2];
+	[keyValuePair setValue:key forKey:@"key"];
+	[keyValuePair setValue:[value description] forKey:@"value"];
+	[_postData addObject:keyValuePair];
+}
+
+- (void)setPostValue:(id <NSObject>)value forKey:(NSString *)key
+{
+	// Remove any existing value
+	NSUInteger i;
+	for (i=0; i<[_postData count]; i++) {
+		NSDictionary *val = [_postData objectAtIndex:i];
+		if ([[val objectForKey:@"key"] isEqualToString:key]) {
+			[_postData removeObjectAtIndex:i];
+			i--;
+		}
+	}
+	[self addPostValue:value forKey:key];
+}
+
+-(void)buildPostBody{
+    
+//    [_requestBodyData appendData:[self mutableArrayToData]];
+    
+    NSString *myBoundary=@"0xKhTmLbOuNdArY";//这个很重要，用于区别输入的域
+    NSString *myContent=[NSString stringWithFormat:@"multipart/form-data;boundary=%@",myBoundary];//意思是要提交的是表单数据
+    
+    [_request setValue:myContent forHTTPHeaderField:@"Content-type"];//定义内容类型
+    
+    [_requestBodyData appendData:[[NSString stringWithFormat:@"\n--%@\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//表示开始
+    
+    NSMutableArray *keys = [NSMutableArray arrayWithCapacity:10];
+    NSMutableArray *values = [NSMutableArray arrayWithCapacity:10];
+    
+    for (NSMutableDictionary * aDic in _postData) {
+        [keys addObject:[aDic valueForKey:@"key"]];
+        [values addObject:[aDic valueForKey:@"value"]];
+    }
+    
+    NSString *endItemBoundary = [NSString stringWithFormat:@"\r\n--%@\r\n",myBoundary];
+    for (int i = 0; i < keys.count; i++) {
+        
+        NSLog(@"key=%@,value=%@",[keys objectAtIndex:i],[values objectAtIndex:i]);
+        
+        [_requestBodyData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",[keys objectAtIndex:i]] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [_requestBodyData appendData:[[values objectAtIndex:i] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        if(i != keys.count - 1)
+            [_requestBodyData appendData:[endItemBoundary dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    [_requestBodyData appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//结束
+}
+
+-(unsigned long long)setPostLength{
+    unsigned long long count = 0;
+    count = _requestBodyData.length;
+    return count;
+}
+
+-(NSData*)mutableArrayToData{
+    
+    return [NSKeyedArchiver archivedDataWithRootObject:_postData];
+}
+
 -(void)setStrartBlock:(WYHttpBasicBlock)aBlock{
     strartBlock = [aBlock copy];
 }
@@ -163,6 +253,5 @@ static NSOperationQueue *g_queue = nil;
 -(void)setFailedBlock:(WYHttpBasicBlock)aBlock{
     failedBlock = [aBlock copy];
 }
-
 
 @end
