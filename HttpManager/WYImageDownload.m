@@ -41,12 +41,6 @@ static NSCache *g_cache = nil;
         [[NSFileManager defaultManager] createDirectoryAtPath:_diskHomePath withIntermediateDirectories:YES attributes:nil error:NULL];
     }
     
-//    _diskCachePath = [WYCommonInfo getDirectoryCache];
-//    _diskCachePath = [_diskCachePath stringByAppendingPathComponent:@"imageCache"];
-//    if (![[NSFileManager defaultManager] fileExistsAtPath:_diskCachePath])
-//    {
-//        [[NSFileManager defaultManager] createDirectoryAtPath:_diskCachePath withIntermediateDirectories:YES attributes:nil error:NULL];
-//    }
     return self;
 }
 
@@ -121,7 +115,6 @@ static NSCache *g_cache = nil;
         //拉伸到多大
         newRect.size.width=size.width;
         newRect.size.height=size.height;
-        
         
         //缩放倍数
         float ratio = MIN(newRect.size.width/origImageSize.width, newRect.size.height/origImageSize.height);

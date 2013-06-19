@@ -196,15 +196,13 @@ static NSOperationQueue *g_queue = nil;
 }
 
 -(void)buildPostBody{
+        
+    NSString *boundary=@"0xKhTmLbOuNdArY";//这个很重要，用于区别输入的域
+    NSString *content=[NSString stringWithFormat:@"multipart/form-data;boundary=%@",boundary];//意思是要提交的是表单数据
     
-//    [_requestBodyData appendData:[self mutableArrayToData]];
+    [_request setValue:content forHTTPHeaderField:@"Content-type"];//定义内容类型
     
-    NSString *myBoundary=@"0xKhTmLbOuNdArY";//这个很重要，用于区别输入的域
-    NSString *myContent=[NSString stringWithFormat:@"multipart/form-data;boundary=%@",myBoundary];//意思是要提交的是表单数据
-    
-    [_request setValue:myContent forHTTPHeaderField:@"Content-type"];//定义内容类型
-    
-    [_requestBodyData appendData:[[NSString stringWithFormat:@"\n--%@\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//表示开始
+    [_requestBodyData appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];//表示开始
     
     NSMutableArray *keys = [NSMutableArray arrayWithCapacity:10];
     NSMutableArray *values = [NSMutableArray arrayWithCapacity:10];
@@ -214,7 +212,7 @@ static NSOperationQueue *g_queue = nil;
         [values addObject:[aDic valueForKey:@"value"]];
     }
     
-    NSString *endItemBoundary = [NSString stringWithFormat:@"\r\n--%@\r\n",myBoundary];
+    NSString *endItemBoundary = [NSString stringWithFormat:@"\r\n--%@\r\n",boundary];
     for (int i = 0; i < keys.count; i++) {
         
         NSLog(@"key=%@,value=%@",[keys objectAtIndex:i],[values objectAtIndex:i]);
@@ -227,7 +225,7 @@ static NSOperationQueue *g_queue = nil;
             [_requestBodyData appendData:[endItemBoundary dataUsingEncoding:NSUTF8StringEncoding]];
     }
     
-    [_requestBodyData appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//结束
+    [_requestBodyData appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];//结束
 }
 
 -(unsigned long long)setPostLength{
