@@ -27,12 +27,12 @@ static NSOperationQueue *g_queue = nil;
 @synthesize requestBodyData = _requestBodyData;
 @synthesize rspMutableData = _rspMutableData;
 @synthesize total = _total;
+@synthesize userInfo = _userInfo;
 
 -(id)init{
 	if(self == [super init]){
 		_rspMutableData = [NSMutableData data];
         _requestBodyData = [NSMutableData data];
-        
         
         _postData = [NSMutableArray array];
         _requestMethod = @"GET";
@@ -41,7 +41,7 @@ static NSOperationQueue *g_queue = nil;
         _requestTimeOut = 30.0f;
         
         g_queue = [[NSOperationQueue alloc] init];
-        [g_queue setMaxConcurrentOperationCount:4];
+        [g_queue setMaxConcurrentOperationCount:2];
         
 	}
 	return self;
@@ -50,7 +50,7 @@ static NSOperationQueue *g_queue = nil;
 +(NSOperationQueue*)shareOprationQueue{
     if(!g_queue){
         g_queue = [[NSOperationQueue alloc] init];
-        [g_queue setMaxConcurrentOperationCount:4];
+        [g_queue setMaxConcurrentOperationCount:2];
     }
     return g_queue;
 }
@@ -102,13 +102,15 @@ static NSOperationQueue *g_queue = nil;
             _requestMethod = @"POST";
         
         [_request setHTTPBody:_requestBodyData];
+        [_request setValue:[NSString stringWithFormat:@"%d",_requestBodyData.length] forHTTPHeaderField:@"Content-Length"];
     }
-    
+
     [_request setHTTPMethod:_requestMethod];
     
     if(![self isCancelled]){
         
         _requestConnection = [[NSURLConnection alloc] initWithRequest:_request delegate:self startImmediately:_startImmediately];
+
         while (_requestConnection != nil) {
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
         }
@@ -195,6 +197,7 @@ static NSOperationQueue *g_queue = nil;
 	[self addPostValue:value forKey:key];
 }
 
+//表单提交
 -(void)buildPostBody{
         
     NSString *boundary=@"0xKhTmLbOuNdArY";//这个很重要，用于区别输入的域

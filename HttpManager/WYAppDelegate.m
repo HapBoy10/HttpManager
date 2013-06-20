@@ -7,7 +7,6 @@
 //
 
 #import "WYAppDelegate.h"
-
 #import "WYViewController.h"
 
 @implementation WYAppDelegate

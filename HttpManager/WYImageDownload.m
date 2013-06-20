@@ -61,7 +61,6 @@ static NSCache *g_cache = nil;
     
     _imageSize = size;
     
-    
     self.delegate = delegate;
     
     //首先在磁盘和cache中查找是否存在，不存在就从网络上查找
@@ -97,7 +96,7 @@ static NSCache *g_cache = nil;
     if(data.length == 0 || !data)
         return nil;
     
-    if(CGSizeEqualToSize(_imageSize, CGSizeZero))
+    if(CGSizeEqualToSize(size, CGSizeZero))
     {
         return [UIImage imageWithData:data];
     }
@@ -105,7 +104,7 @@ static NSCache *g_cache = nil;
     {
         [self saveToLocal:[WYCommonInfo getDirectoryHomeWithFileName:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:data];//原图
         
-        
+
         UIImage *image = [UIImage imageWithData:data];
         
         CGSize origImageSize= [image size];
@@ -118,10 +117,8 @@ static NSCache *g_cache = nil;
         
         //缩放倍数
         float ratio = MIN(newRect.size.width/origImageSize.width, newRect.size.height/origImageSize.height);
-        
-        
+                
         UIGraphicsBeginImageContext(newRect.size);
-        
         
         CGRect projectRect;
         projectRect.size.width =ratio * origImageSize.width;
@@ -135,10 +132,10 @@ static NSCache *g_cache = nil;
         
         //压缩比例
         
-        NSData *smallData=UIImageJPEGRepresentation(small, 0.2);
+        NSData *smallData=UIImageJPEGRepresentation(small, 1.0);
         
-        [self saveToLocal:[WYCommonInfo getDirectoryHomeWithFileName:[@"small_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:smallData];//原图
-        return nil;
+        [self saveToLocal:[WYCommonInfo getDirectoryHomeWithFileName:[@"small_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:smallData];//小图
+        return [UIImage imageWithData:smallData];
     }
 }
 

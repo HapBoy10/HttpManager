@@ -34,6 +34,19 @@ static NSOperationQueue *g_queue = nil;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIImageView *imageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(110, 110, 160, 160)];
+    
+    
+    NSData *data = UIImagePNGRepresentation([UIImage imageNamed:@"Default@2x.png"]);
+    UIImage *image =[[WYImageDownload shareInstance] converImageToSize:CGSizeMake(160, 160) data:[NSMutableData dataWithData:data]];
+    NSLog(@"%@,%d",NSStringFromCGSize(image.size),UIImagePNGRepresentation(image).length);
+    
+    
+    imageView1.image = image;
+    [self.view addSubview:imageView1];
+    
+    return;
     NSURL * url=[NSURL URLWithString:POSTDEVICE];
     __weak WYHttpRequest *request1 = [WYHttpRequest requestWithURL:url];
     

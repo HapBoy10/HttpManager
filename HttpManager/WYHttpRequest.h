@@ -39,8 +39,9 @@ typedef void (^WYHttpDataBlock)(NSData *data , NSMutableData *total);
 @property(nonatomic,retain) NSURL *requestURL;
 @property(nonatomic,retain) NSString *requestMethod;
 @property(nonatomic,retain) NSMutableData *requestBodyData;
-@property(assign) long long total;
+@property(readonly) long long total;
 @property(nonatomic,readonly,retain) NSMutableData *rspMutableData;
+@property(retain) NSDictionary *userInfo;
 @property(nonatomic,assign) id<WYHttpRequestDelegate>delegate;
 
 

@@ -13,7 +13,6 @@
 @protocol WYImageDownloadDelegate <NSObject>
 @optional
 -(void)imageDownloadDidFinish:(WYImageDownload*)download;
-
 @end
 
 typedef void (^WYImageCompletionBlock)(UIImage *image);
@@ -34,6 +33,7 @@ typedef void (^WYImageReceivedBlock)(long long total);;
 
 -(void)downLoadWithURL:(NSURL*)url converTosize:(CGSize)size delegate:(id<WYImageDownloadDelegate>)delegate completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile received:(WYImageReceivedBlock)received;
 
+-(UIImage *)converImageToSize:(CGSize)size data:(NSMutableData*)data;
 
 -(void)setReceivedBlock:(WYImageReceivedBlock)aBlock;
 -(void)setCompletionBlock:(WYImageCompletionBlock)aBlock;
