@@ -62,7 +62,6 @@ static NSOperationQueue *g_queue = nil;
 
 -(id)initWithURL:(NSURL *)url{
     
-    
     self = [self init];
     [self setRequestURL:url];
     return self;
@@ -86,12 +85,6 @@ static NSOperationQueue *g_queue = nil;
     
     [g_queue cancelAllOperations];
 }
--(void)setHeadInfo :(NSMutableURLRequest*)request{
-    if(_requestBodyData.length && _requestBodyData != nil){
-        [_request setHTTPBody:(NSData*)_requestBodyData];
-    }
-}
-
 
 //测试post数据、
 -(void)main{
@@ -112,7 +105,6 @@ static NSOperationQueue *g_queue = nil;
     
     [_request setHTTPMethod:_requestMethod];
     
-    [self setHeadInfo:_request];
     if(![self isCancelled]){
         
         _requestConnection = [[NSURLConnection alloc] initWithRequest:_request delegate:self startImmediately:_startImmediately];
