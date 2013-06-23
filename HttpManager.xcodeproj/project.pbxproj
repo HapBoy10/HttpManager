@@ -275,11 +275,15 @@
 		5FCC7EE2176AAE3D00BFEE3A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Wai Kit Tong (VKHZ3ED577)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrew Wai Kit Tong (VKHZ3ED577)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HttpManager/HttpManager-Prefix.pch";
 				INFOPLIST_FILE = "HttpManager/HttpManager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6D75EBF6-DEA4-45F1-9AE9-9954E7131018";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6D75EBF6-DEA4-45F1-9AE9-9954E7131018";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -287,11 +291,15 @@
 		5FCC7EE3176AAE3D00BFEE3A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Wai Kit Tong (VKHZ3ED577)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andrew Wai Kit Tong (VKHZ3ED577)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HttpManager/HttpManager-Prefix.pch";
 				INFOPLIST_FILE = "HttpManager/HttpManager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6D75EBF6-DEA4-45F1-9AE9-9954E7131018";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6D75EBF6-DEA4-45F1-9AE9-9954E7131018";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

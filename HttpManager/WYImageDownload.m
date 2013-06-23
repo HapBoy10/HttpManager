@@ -40,6 +40,10 @@ static NSCache *g_cache = nil;
             [[NSFileManager defaultManager] createDirectoryAtPath:_diskHomePath withIntermediateDirectories:YES attributes:nil error:NULL];
         }
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     return self;
 }
 
@@ -63,6 +67,7 @@ static NSCache *g_cache = nil;
     _imageURL = url;
     _imageSize = size;
     
+<<<<<<< HEAD
     WYImageCompletionBlock completionBlock = completion;
     WYImageFaileBlock faileBlock = faile;
     WYImageReceivedBlock receivedBlock = received;
@@ -77,6 +82,9 @@ static NSCache *g_cache = nil;
     }
     
    __weak WYHttpRequest *request = [WYHttpRequest requestWithURL:url];
+=======
+    self.delegate = delegate;
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     
     [request setCompletionBlock:^{
         UIImage* image = [self converImageToSize:_imageSize data:request.rspMutableData];
@@ -106,15 +114,25 @@ static NSCache *g_cache = nil;
     if(data.length == 0 || !data)
         return nil;
     
+<<<<<<< HEAD
     [self saveToLocal:[_diskHomePath stringByAppendingPathComponent:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:data];
     
     if(CGSizeEqualToSize(_imageSize, CGSizeZero))
+=======
+    if(CGSizeEqualToSize(size, CGSizeZero))
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     {
         
         return [UIImage imageWithData:data];
     }
     else
     {
+<<<<<<< HEAD
+=======
+        [self saveToLocal:[WYCommonInfo getDirectoryHomeWithFileName:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:data];//原图
+        
+
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
         UIImage *image = [UIImage imageWithData:data];
         
         CGSize origImageSize= [image size];
@@ -127,10 +145,8 @@ static NSCache *g_cache = nil;
         
         //缩放倍数
         float ratio = MIN(newRect.size.width/origImageSize.width, newRect.size.height/origImageSize.height);
-        
-        
+                
         UIGraphicsBeginImageContext(newRect.size);
-        
         
         CGRect projectRect;
         projectRect.size.width =ratio * origImageSize.width;
@@ -144,10 +160,15 @@ static NSCache *g_cache = nil;
         
         //压缩比例
         
-        NSData *smallData=UIImageJPEGRepresentation(small, 0.2);
+        NSData *smallData=UIImageJPEGRepresentation(small, 1.0);
         
+<<<<<<< HEAD
         [self saveToLocal:[_diskHomePath stringByAppendingPathComponent:[@"small_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:smallData];//原图
         return nil;
+=======
+        [self saveToLocal:[WYCommonInfo getDirectoryHomeWithFileName:[@"small_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:smallData];//小图
+        return [UIImage imageWithData:smallData];
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     }
 }
 

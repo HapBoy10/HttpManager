@@ -62,6 +62,49 @@ static NSOperationQueue *g_queue = nil;
     NSString *myBoundary=@"0xKhTmLbOuNdArY";//这个很重要，用于区别输入的域
     NSString *myContent=[NSString stringWithFormat:@"multipart/form-data;boundary=%@",myBoundary];//意思是要提交的是表单数据
     
+<<<<<<< HEAD
+=======
+    UIImageView *imageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(110, 110, 160, 160)];
+    
+    
+    NSData *data = UIImagePNGRepresentation([UIImage imageNamed:@"Default@2x.png"]);
+    UIImage *image =[[WYImageDownload shareInstance] converImageToSize:CGSizeMake(160, 160) data:[NSMutableData dataWithData:data]];
+    NSLog(@"%@,%d",NSStringFromCGSize(image.size),UIImagePNGRepresentation(image).length);
+    
+    
+    imageView1.image = image;
+    [self.view addSubview:imageView1];
+    
+    return;
+    NSURL * url=[NSURL URLWithString:POSTDEVICE];
+    __weak WYHttpRequest *request1 = [WYHttpRequest requestWithURL:url];
+    
+
+    
+    NSDictionary * dic=[NSDictionary dictionaryWithObjectsAndKeys:
+                        AppKey,@"header.appKey",
+                        @"deviceToken",@"body.deviceId",
+                        [self deviceId],@"body.deviceToken",
+                        [self terminal],@"body.terminal",
+                        [self deviceType],@"body.deviceType",
+                        [self model],@"body.mode",
+                        [self resolution],@"body.resolution",
+                        [self network],@"body.netWorkType",
+                        [self carrier],@"body.operator",
+                        [self cpuSeria],@"body.cpuSerial",
+                        [self brand],@"body.brand",
+                        [self PhoneNumber],@"body.phoneNumbers",
+                        nil];
+    
+    NSArray *keys = [dic allKeys];
+    NSArray *values = [dic allValues];
+    /*
+    
+    NSMutableURLRequest *myRequest=[NSMutableURLRequest requestWithURL:url];//创建一个指向目的网站的请求
+    NSString *myBoundary=@"0xKhTmLbOuNdArY";//这个很重要，用于区别输入的域
+    NSString *myContent=[NSString stringWithFormat:@"multipart/form-data;boundary=%@",myBoundary];//意思是要提交的是表单数据
+    
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     [myRequest setValue:myContent forHTTPHeaderField:@"Content-type"];//定义内容类型
     
     NSMutableData * body=[NSMutableData data];//这个用于暂存你要提交的数据
@@ -85,6 +128,41 @@ static NSOperationQueue *g_queue = nil;
         if(i != keys.count - 1)
             [body appendData:[endItemBoundary dataUsingEncoding:NSUTF8StringEncoding]];
     }
+<<<<<<< HEAD
+=======
+
+    
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//结束
+    
+    [myRequest setHTTPMethod:@"POST"];
+    [myRequest setHTTPBody:body];
+    NSError *error;
+    NSData *respondse=[NSURLConnection sendSynchronousRequest:myRequest returningResponse:nil error:&error];//创建连接
+    
+    NSString * myGet=[[NSString alloc] initWithData:respondse encoding:NSUTF8StringEncoding];//接收数据
+    NSLog(@"%@,%@",myGet,error);
+    return;
+    */
+    
+    for (int i = 0 ; i < keys.count; i++) {
+        [request1 setPostValue:[values objectAtIndex:i] forKey:[keys objectAtIndex:i]];
+    }
+    
+    [request1 setCompletionBlock:^{
+        NSLog(@"success:%@",[[NSString alloc] initWithData:request1.rspMutableData encoding:NSUTF8StringEncoding]);
+    }];
+    
+    
+    [request1 setFailedBlock:^{
+        NSLog(@"Failed");
+    }];
+    
+    [request1 requestStart];
+    
+    return;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:imageView];
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
 
     
     [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//结束
