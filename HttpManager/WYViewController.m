@@ -35,6 +35,9 @@ static NSOperationQueue *g_queue = nil;
 {
     [super viewDidLoad];
     
+    
+    
+    
     UIImageView *imageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(110, 110, 160, 160)];
     
     
@@ -45,7 +48,7 @@ static NSOperationQueue *g_queue = nil;
     
     imageView1.image = image;
     [self.view addSubview:imageView1];
-    
+    NSLog(@"%u",[[imageView1 description] hash]);
     return;
     NSURL * url=[NSURL URLWithString:POSTDEVICE];
     __weak WYHttpRequest *request1 = [WYHttpRequest requestWithURL:url];

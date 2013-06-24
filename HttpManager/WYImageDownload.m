@@ -116,7 +116,7 @@ static NSCache *g_cache = nil;
         newRect.size.height=size.height;
         
         //缩放倍数
-        float ratio = MIN(newRect.size.width/origImageSize.width, newRect.size.height/origImageSize.height);
+        float ratio = MIN(newRect.size.width/origImageSize.width, newRect.size.height / origImageSize.height);
                 
         UIGraphicsBeginImageContext(newRect.size);
         
@@ -135,6 +135,7 @@ static NSCache *g_cache = nil;
         NSData *smallData=UIImageJPEGRepresentation(small, 1.0);
         
         [self saveToLocal:[WYCommonInfo getDirectoryHomeWithFileName:[@"small_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:smallData];//小图
+        
         return [UIImage imageWithData:smallData];
     }
 }
