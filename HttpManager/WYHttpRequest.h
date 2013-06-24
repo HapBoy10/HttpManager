@@ -16,14 +16,14 @@
 
 -(void)requestFailed:(WYHttpRequest*)request didFailWithError:(NSError *)error;
 
--(void)requestRcvData:(WYHttpRequest*)request didReceiveData:(NSData *)data curTotal:(NSMutableData*)curTotal;
+-(void)requestRcvData:(WYHttpRequest*)request didReceiveData:(NSData *)data curlength:(long long)curlength total:(long long)total;
 
 -(void)requestFinish:(WYHttpRequest*)request totalData:(NSMutableData*)data;
 
 @end
 
 typedef void (^WYHttpBasicBlock)(void);
-typedef void (^WYHttpDataBlock)(NSData *data , NSMutableData *total);
+typedef void (^WYHttpDataBlock)(NSData *data ,long long curlength,long long total);
 
 @interface WYHttpRequest : NSOperation{
 
@@ -34,12 +34,21 @@ typedef void (^WYHttpDataBlock)(NSData *data , NSMutableData *total);
     
 }
 
+@property(assign) long long total;
 @property(assign) BOOL startImmediately;
 @property(assign) NSTimeInterval requestTimeOut;
+@property(assign) NSInteger rspCode;
+
+
+
+
 @property(nonatomic,retain) NSURL *requestURL;
 @property(nonatomic,retain) NSString *requestMethod;
 @property(nonatomic,retain) NSMutableData *requestBodyData;
+<<<<<<< HEAD
+=======
 @property(readonly) long long total;
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
 @property(nonatomic,readonly,retain) NSMutableData *rspMutableData;
 @property(retain) NSDictionary *userInfo;
 @property(nonatomic,assign) id<WYHttpRequestDelegate>delegate;

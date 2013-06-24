@@ -19,26 +19,27 @@ typedef void (^WYImageCompletionBlock)(UIImage *image);
 typedef void (^WYImageFaileBlock)(void);
 typedef void (^WYImageReceivedBlock)(long long total);;
 
-@interface WYImageDownload : NSObject<WYHttpRequestDelegate>{
+@interface WYImageDownload : NSObject
 
-    WYImageCompletionBlock completionBlock;
-    WYImageFaileBlock faileBlock;
-    WYImageReceivedBlock receivedBlock;
-}
+@property(assign,nonatomic)id<WYImageDownloadDelegate>delegate;
 
 +(WYImageDownload*)shareInstance;
-@property(assign,nonatomic)id<WYImageDownloadDelegate>delegate;
+
+-(void)downLoadWithURL:(NSURL*)url converTosize:(CGSize)size  completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile;
 
 -(void)downLoadWithURL:(NSURL*)url converTosize:(CGSize)size delegate:(id<WYImageDownloadDelegate>)delegate completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile;
 
 -(void)downLoadWithURL:(NSURL*)url converTosize:(CGSize)size delegate:(id<WYImageDownloadDelegate>)delegate completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile received:(WYImageReceivedBlock)received;
 
+<<<<<<< HEAD
+=======
 -(UIImage *)converImageToSize:(CGSize)size data:(NSMutableData*)data;
 
 -(void)setReceivedBlock:(WYImageReceivedBlock)aBlock;
 -(void)setCompletionBlock:(WYImageCompletionBlock)aBlock;
 -(void)setFailedBlock:(WYImageFaileBlock)aBlock;
 
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
 @end
 
 

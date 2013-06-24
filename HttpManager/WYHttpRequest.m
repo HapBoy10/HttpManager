@@ -27,13 +27,21 @@ static NSOperationQueue *g_queue = nil;
 @synthesize requestBodyData = _requestBodyData;
 @synthesize rspMutableData = _rspMutableData;
 @synthesize total = _total;
+<<<<<<< HEAD
+@synthesize rspCode = _rspCode;
+=======
 @synthesize userInfo = _userInfo;
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
 
 -(id)init{
 	if(self == [super init]){
 		_rspMutableData = [NSMutableData data];
         _requestBodyData = [NSMutableData data];
         
+<<<<<<< HEAD
+        
+=======
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
         _postData = [NSMutableArray array];
         _requestMethod = @"GET";
         _startImmediately = YES;
@@ -61,7 +69,6 @@ static NSOperationQueue *g_queue = nil;
 
 -(id)initWithURL:(NSURL *)url{
     
-    
     self = [self init];
     [self setRequestURL:url];
     return self;
@@ -86,7 +93,6 @@ static NSOperationQueue *g_queue = nil;
     [g_queue cancelAllOperations];
 }
 
-
 //测试post数据、
 -(void)main{
 	
@@ -102,9 +108,14 @@ static NSOperationQueue *g_queue = nil;
             _requestMethod = @"POST";
         
         [_request setHTTPBody:_requestBodyData];
+<<<<<<< HEAD
+    }
+    
+=======
         [_request setValue:[NSString stringWithFormat:@"%d",_requestBodyData.length] forHTTPHeaderField:@"Content-Length"];
     }
 
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     [_request setHTTPMethod:_requestMethod];
     
     if(![self isCancelled]){
@@ -117,11 +128,20 @@ static NSOperationQueue *g_queue = nil;
     }    
 }
 
-
+//接受到响应
 -(void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response{
+<<<<<<< HEAD
+    
+    _rspCode = [((NSHTTPURLResponse *)response) statusCode];
+    NSDictionary *dic = [((NSHTTPURLResponse *)response) allHeaderFields];
+    NSLog(@"didReceiveResponse:%@",dic);
+    return;
+
+=======
 //    NSLog(@"didReceiveResponse:%@,%d",((NSHTTPURLResponse *)response).allHeaderFields,[((NSHTTPURLResponse *)response) statusCode]);
     return;
     //判断请求数据是否为空
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     if(![response respondsToSelector:@selector(statusCode)] || [((NSHTTPURLResponse *)response) statusCode] < 400){
         _total = [response expectedContentLength] > 0 ? [response expectedContentLength] : 0;
         if(_total == 0) {
@@ -140,9 +160,14 @@ static NSOperationQueue *g_queue = nil;
             failedBlock();
     }    
 }
+<<<<<<< HEAD
+//请求失败
+=======
 
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
 -(void)connection:(NSURLConnection*)connection didFailWithError:(NSError *)error{
     NSLog(@"didFailWithError:%@,%@",error,_request.URL);
+    _rspCode = error.code;
     if([_delegate respondsToSelector:@selector(requestFailed:didFailWithError:)])
         [_delegate requestFailed:self didFailWithError:error];
     
@@ -150,22 +175,24 @@ static NSOperationQueue *g_queue = nil;
         failedBlock();
 }
 
+//接受到数据
 -(void)connection:(NSURLConnection*)connection didReceiveData:(NSData *)data{
     
     [_rspMutableData appendData:data];
-    if([_delegate respondsToSelector:@selector(requestRcvData:didReceiveData:curTotal:)])
-        [_delegate requestRcvData:self didReceiveData:data curTotal:_rspMutableData];
+    if([_delegate respondsToSelector:@selector(requestRcvData:didReceiveData:curlength:total:)])
+        [_delegate requestRcvData:self didReceiveData:data curlength:_rspMutableData.length total:_total];
     
     if(receivedBlock){
-        receivedBlock(data,_rspMutableData);
+        receivedBlock(data,_rspMutableData.length,_total);
     }
-    NSLog(@"didReceiveData:%@,%d",_request.URL,_rspMutableData.length);
 }
 
+//数据接收完成
 -(void)connectionDidFinishLoading:(NSURLConnection*)connection{
-    NSLog(@"connectionDidFinishLoading:%@",_request.URL);
+    
     if([_delegate respondsToSelector:@selector(requestFinish:totalData:)])
         [_delegate requestFinish:self totalData:_rspMutableData];
+    
     if(completionBlock)
         completionBlock();
 }
@@ -197,6 +224,18 @@ static NSOperationQueue *g_queue = nil;
 	[self addPostValue:value forKey:key];
 }
 
+<<<<<<< HEAD
+-(void)buildPostBody{
+    
+//    [_requestBodyData appendData:[self mutableArrayToData]];
+    
+    NSString *myBoundary=@"0xKhTmLbOuNdArY";//这个很重要，用于区别输入的域
+    NSString *myContent=[NSString stringWithFormat:@"multipart/form-data;boundary=%@",myBoundary];//意思是要提交的是表单数据
+    
+    [_request setValue:myContent forHTTPHeaderField:@"Content-type"];//定义内容类型
+    
+    [_requestBodyData appendData:[[NSString stringWithFormat:@"\n--%@\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//表示开始
+=======
 //表单提交
 -(void)buildPostBody{
         
@@ -206,6 +245,7 @@ static NSOperationQueue *g_queue = nil;
     [_request setValue:content forHTTPHeaderField:@"Content-type"];//定义内容类型
     
     [_requestBodyData appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];//表示开始
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     
     NSMutableArray *keys = [NSMutableArray arrayWithCapacity:10];
     NSMutableArray *values = [NSMutableArray arrayWithCapacity:10];
@@ -215,7 +255,11 @@ static NSOperationQueue *g_queue = nil;
         [values addObject:[aDic valueForKey:@"value"]];
     }
     
+<<<<<<< HEAD
+    NSString *endItemBoundary = [NSString stringWithFormat:@"\r\n--%@\r\n",myBoundary];
+=======
     NSString *endItemBoundary = [NSString stringWithFormat:@"\r\n--%@\r\n",boundary];
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     for (int i = 0; i < keys.count; i++) {
         
         NSLog(@"key=%@,value=%@",[keys objectAtIndex:i],[values objectAtIndex:i]);
@@ -228,7 +272,11 @@ static NSOperationQueue *g_queue = nil;
             [_requestBodyData appendData:[endItemBoundary dataUsingEncoding:NSUTF8StringEncoding]];
     }
     
+<<<<<<< HEAD
+    [_requestBodyData appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//结束
+=======
     [_requestBodyData appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];//结束
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
 }
 
 -(unsigned long long)setPostLength{

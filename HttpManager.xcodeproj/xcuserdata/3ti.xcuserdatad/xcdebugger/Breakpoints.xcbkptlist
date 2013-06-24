@@ -2,4 +2,32 @@
 <Bucket
    type = "1"
    version = "1.0">
+<<<<<<< HEAD
+=======
+   <FileBreakpoints>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+<<<<<<< HEAD
+         filePath = "HttpManager/WYViewController.m"
+         timestampString = "393248104.954151"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "107"
+         endingLineNumber = "107"
+         landmarkName = "-viewDidLoad"
+=======
+         filePath = "HttpManager/WYImageDownload.m"
+         timestampString = "393417672.107474"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "122"
+         endingLineNumber = "122"
+         landmarkName = "-converImageToSize:data:"
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
+         landmarkType = "5">
+      </FileBreakpoint>
+   </FileBreakpoints>
+>>>>>>> 8faf1874f63b12fc6a1f8a0f652d79749b6c56a3
 </Bucket>

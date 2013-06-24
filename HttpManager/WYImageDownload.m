@@ -14,7 +14,6 @@
  
     CGSize _imageSize;
     NSURL *_imageURL;
-    NSString *_diskCachePath;
     NSString *_diskHomePath;
 }
 @end
@@ -27,28 +26,37 @@ static NSCache *g_cache = nil;
 @synthesize delegate = _delegate;
 
 -(id)init{
-    self = [super init];
+    if(self = [super init]){
     
-    _imageSize = CGSizeZero;
-    
-    g_cache = [[NSCache alloc] init];
-    g_cache.name = @"imageHome";
-    
-    _diskHomePath = [WYCommonInfo getDirectoryHome];
-    _diskHomePath = [_diskHomePath stringByAppendingPathComponent:@"imageHome"];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:_diskHomePath])
-    {
-        [[NSFileManager defaultManager] createDirectoryAtPath:_diskHomePath withIntermediateDirectories:YES attributes:nil error:NULL];
+        _imageSize = CGSizeZero;
+        
+        g_cache = [[NSCache alloc] init];
+        g_cache.name = @"imageHome";
+        
+        _diskHomePath = [WYCommonInfo getDirectoryHome];
+        _diskHomePath = [_diskHomePath stringByAppendingPathComponent:@"imageHome"];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:_diskHomePath])
+        {
+            [[NSFileManager defaultManager] createDirectoryAtPath:_diskHomePath withIntermediateDirectories:YES attributes:nil error:NULL];
+        }
     }
+<<<<<<< HEAD
+=======
     
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     return self;
 }
 
 +(WYImageDownload*)shareInstance{
     if(!g_imageDownload)
-        g_imageDownload = [[[self class] alloc] init];
+        g_imageDownload = [[self alloc] init];
     return g_imageDownload;
 }
+
+-(void)downLoadWithURL:(NSURL*)url converTosize:(CGSize)size  completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile{
+    [self downLoadWithURL:url converTosize:size delegate:nil completion:completion failure:faile];
+}
+
 
 -(void)downLoadWithURL:(NSURL*)url converTosize:(CGSize)size delegate:(id<WYImageDownloadDelegate>)delegate completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile{
     [self downLoadWithURL:url converTosize:size delegate:delegate completion:completion failure:faile received:nil];
@@ -56,39 +64,49 @@ static NSCache *g_cache = nil;
 
 -(void)downLoadWithURL:(NSURL*)url converTosize:(CGSize)size delegate:(id<WYImageDownloadDelegate>)delegate completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile received:(WYImageReceivedBlock)received{
     
-    
     _imageURL = url;
-    
     _imageSize = size;
     
-    self.delegate = delegate;
+<<<<<<< HEAD
+    WYImageCompletionBlock completionBlock = completion;
+    WYImageFaileBlock faileBlock = faile;
+    WYImageReceivedBlock receivedBlock = received;
+        
+    if([self isDisked:url]){//首先在磁盘和cache中查找是否存在，不存在就从网络上查找
+        NSString *filePath = [_diskHomePath stringByAppendingPathComponent:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:url]]];
+        
+        UIImage *image = [UIImage imageWithContentsOfFile:filePath];
+        if(completionBlock)
+            completionBlock(image);
+        return;
+    }
     
-    //首先在磁盘和cache中查找是否存在，不存在就从网络上查找
-    WYHttpRequest *request = [WYHttpRequest requestWithURL:url];
-    request.delegate = self;
+   __weak WYHttpRequest *request = [WYHttpRequest requestWithURL:url];
+=======
+    self.delegate = delegate;
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
+    
+    [request setCompletionBlock:^{
+        UIImage* image = [self converImageToSize:_imageSize data:request.rspMutableData];
+        
+        if([_delegate respondsToSelector:@selector(imageDownloadDidFinish:)])
+            [_delegate imageDownloadDidFinish:self];
+        
+        if(completionBlock)
+            completionBlock(image);
+    }];
+    
+    [request setFailedBlock:^{
+        if(faileBlock)//有可能是请求失败
+            faileBlock();
+    }];
+    [request setReceivedBlock:^(NSData *data, long long curlength, long long total) {
+        
+        if(receivedBlock)
+            receivedBlock(request.total);
+    }];
     
     [request requestStart];
-}
-
--(void)requestFinish:(WYHttpRequest *)request totalData:(NSMutableData *)data{
-    
-    //这个地方肯定是有数据
-    UIImage* image = [self converImageToSize:_imageSize data:data];
-    if([_delegate respondsToSelector:@selector(imageDownloadDidFinish:)])
-        [_delegate imageDownloadDidFinish:self];
-    
-    if(completionBlock)
-        completionBlock(image);
-}
--(void)requestFailed:(WYHttpRequest *)request didFailWithError:(NSError *)error{
-    if(faileBlock)//有可能是请求失败
-        faileBlock();
-}
-
--(void)requestRcvData:(WYHttpRequest *)request didReceiveData:(NSData *)data curTotal:(NSMutableData *)curTotal{
-
-    if(receivedBlock)
-        receivedBlock(request.total);
 }
 
 -(UIImage *)converImageToSize:(CGSize)size data:(NSMutableData*)data{
@@ -96,15 +114,25 @@ static NSCache *g_cache = nil;
     if(data.length == 0 || !data)
         return nil;
     
+<<<<<<< HEAD
+    [self saveToLocal:[_diskHomePath stringByAppendingPathComponent:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:data];
+    
+    if(CGSizeEqualToSize(_imageSize, CGSizeZero))
+=======
     if(CGSizeEqualToSize(size, CGSizeZero))
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     {
+        
         return [UIImage imageWithData:data];
     }
     else
     {
+<<<<<<< HEAD
+=======
         [self saveToLocal:[WYCommonInfo getDirectoryHomeWithFileName:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:data];//原图
         
 
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
         UIImage *image = [UIImage imageWithData:data];
         
         CGSize origImageSize= [image size];
@@ -134,9 +162,14 @@ static NSCache *g_cache = nil;
         
         NSData *smallData=UIImageJPEGRepresentation(small, 1.0);
         
+<<<<<<< HEAD
+        [self saveToLocal:[_diskHomePath stringByAppendingPathComponent:[@"small_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:smallData];//原图
+        return nil;
+=======
         [self saveToLocal:[WYCommonInfo getDirectoryHomeWithFileName:[@"small_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:smallData];//小图
         
         return [UIImage imageWithData:smallData];
+>>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     }
 }
 
@@ -145,15 +178,11 @@ static NSCache *g_cache = nil;
     [[NSFileManager defaultManager] createFileAtPath:fileName contents:data attributes:nil];
 }
 
+-(BOOL)isDisked:(NSURL*)url{
 
--(void)setReceivedBlock:(WYImageReceivedBlock)aBlock{
-    receivedBlock = [aBlock copy];
-}
--(void)setCompletionBlock:(WYImageCompletionBlock)aBlock{
-    completionBlock = [aBlock copy];
-}
--(void)setFailedBlock:(WYImageFaileBlock)aBlock{
-    faileBlock = [aBlock copy];
+    if([[NSFileManager defaultManager] fileExistsAtPath:[_diskHomePath stringByAppendingPathComponent:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:url]]] isDirectory:NO])
+        return YES;
+    return NO;
 }
 @end
 
