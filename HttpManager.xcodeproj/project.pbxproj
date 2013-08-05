@@ -19,6 +19,8 @@
 		5FCC7EDB176AAE3D00BFEE3A /* WYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC7EDA176AAE3D00BFEE3A /* WYViewController.m */; };
 		5FCC7EDE176AAE3D00BFEE3A /* WYViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FCC7EDC176AAE3D00BFEE3A /* WYViewController.xib */; };
 		5FCC7EE6176AAEE800BFEE3A /* WYHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC7EE5176AAEE800BFEE3A /* WYHttpRequest.m */; };
+		5FCFF34817AFABC800617450 /* WYHttpTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCFF34517AFABC800617450 /* WYHttpTask.m */; };
+		5FCFF34917AFABC800617450 /* WYImageDownLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCFF34717AFABC800617450 /* WYImageDownLoader.m */; };
 		E2CE17C6176BF7EA00BCDBE7 /* WYImageDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CE17C5176BF7EA00BCDBE7 /* WYImageDownload.m */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +43,10 @@
 		5FCC7EDD176AAE3D00BFEE3A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WYViewController.xib; sourceTree = "<group>"; };
 		5FCC7EE4176AAEE800BFEE3A /* WYHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYHttpRequest.h; sourceTree = "<group>"; };
 		5FCC7EE5176AAEE800BFEE3A /* WYHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYHttpRequest.m; sourceTree = "<group>"; };
+		5FCFF34417AFABC800617450 /* WYHttpTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYHttpTask.h; sourceTree = "<group>"; };
+		5FCFF34517AFABC800617450 /* WYHttpTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYHttpTask.m; sourceTree = "<group>"; };
+		5FCFF34617AFABC800617450 /* WYImageDownLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYImageDownLoader.h; sourceTree = "<group>"; };
+		5FCFF34717AFABC800617450 /* WYImageDownLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYImageDownLoader.m; sourceTree = "<group>"; };
 		E2CE17C4176BF7EA00BCDBE7 /* WYImageDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYImageDownload.h; sourceTree = "<group>"; };
 		E2CE17C5176BF7EA00BCDBE7 /* WYImageDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYImageDownload.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,6 +123,10 @@
 		E2CE17C1176BE80F00BCDBE7 /* WYHttp */ = {
 			isa = PBXGroup;
 			children = (
+				5FCFF34417AFABC800617450 /* WYHttpTask.h */,
+				5FCFF34517AFABC800617450 /* WYHttpTask.m */,
+				5FCFF34617AFABC800617450 /* WYImageDownLoader.h */,
+				5FCFF34717AFABC800617450 /* WYImageDownLoader.m */,
 				5FCC7EE4176AAEE800BFEE3A /* WYHttpRequest.h */,
 				5FCC7EE5176AAEE800BFEE3A /* WYHttpRequest.m */,
 				E2CE17C4176BF7EA00BCDBE7 /* WYImageDownload.h */,
@@ -197,6 +207,8 @@
 				5FCC7EDB176AAE3D00BFEE3A /* WYViewController.m in Sources */,
 				5FCC7EE6176AAEE800BFEE3A /* WYHttpRequest.m in Sources */,
 				E2CE17C6176BF7EA00BCDBE7 /* WYImageDownload.m in Sources */,
+				5FCFF34817AFABC800617450 /* WYHttpTask.m in Sources */,
+				5FCFF34917AFABC800617450 /* WYImageDownLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

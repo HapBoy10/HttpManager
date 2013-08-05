@@ -31,19 +31,16 @@ static NSCache *g_cache = nil;
         _imageSize = CGSizeZero;
         
         g_cache = [[NSCache alloc] init];
-        g_cache.name = @"imageHome";
+        g_cache.name = @"image";
         
         _diskHomePath = [WYCommonInfo getDirectoryHome];
-        _diskHomePath = [_diskHomePath stringByAppendingPathComponent:@"imageHome"];
+        _diskHomePath = [_diskHomePath stringByAppendingPathComponent:@"image"];
         if (![[NSFileManager defaultManager] fileExistsAtPath:_diskHomePath])
         {
             [[NSFileManager defaultManager] createDirectoryAtPath:_diskHomePath withIntermediateDirectories:YES attributes:nil error:NULL];
         }
     }
-<<<<<<< HEAD
-=======
-    
->>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
+
     return self;
 }
 
@@ -67,7 +64,6 @@ static NSCache *g_cache = nil;
     _imageURL = url;
     _imageSize = size;
     
-<<<<<<< HEAD
     WYImageCompletionBlock completionBlock = completion;
     WYImageFaileBlock faileBlock = faile;
     WYImageReceivedBlock receivedBlock = received;
@@ -82,11 +78,9 @@ static NSCache *g_cache = nil;
     }
     
    __weak WYHttpRequest *request = [WYHttpRequest requestWithURL:url];
-=======
     self.delegate = delegate;
->>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     
-    [request setCompletionBlock:^{
+    [request setCompletionBlock:^(NSData *data){
         UIImage* image = [self converImageToSize:_imageSize data:request.rspMutableData];
         
         if([_delegate respondsToSelector:@selector(imageDownloadDidFinish:)])
@@ -114,25 +108,16 @@ static NSCache *g_cache = nil;
     if(data.length == 0 || !data)
         return nil;
     
-<<<<<<< HEAD
     [self saveToLocal:[_diskHomePath stringByAppendingPathComponent:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:data];
     
-    if(CGSizeEqualToSize(_imageSize, CGSizeZero))
-=======
     if(CGSizeEqualToSize(size, CGSizeZero))
->>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     {
-        
         return [UIImage imageWithData:data];
     }
     else
     {
-<<<<<<< HEAD
-=======
         [self saveToLocal:[WYCommonInfo getDirectoryHomeWithFileName:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:data];//原图
-        
 
->>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
         UIImage *image = [UIImage imageWithData:data];
         
         CGSize origImageSize= [image size];
@@ -161,15 +146,10 @@ static NSCache *g_cache = nil;
         //压缩比例
         
         NSData *smallData=UIImageJPEGRepresentation(small, 1.0);
-        
-<<<<<<< HEAD
-        [self saveToLocal:[_diskHomePath stringByAppendingPathComponent:[@"small_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:smallData];//原图
-        return nil;
-=======
+
         [self saveToLocal:[WYCommonInfo getDirectoryHomeWithFileName:[@"small_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:smallData];//小图
         
         return [UIImage imageWithData:smallData];
->>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     }
 }
 
@@ -180,10 +160,9 @@ static NSCache *g_cache = nil;
 
 -(BOOL)isDisked:(NSURL*)url{
 
-    if([[NSFileManager defaultManager] fileExistsAtPath:[_diskHomePath stringByAppendingPathComponent:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:url]]] isDirectory:NO])
-        return YES;
-    return NO;
+    return [[NSFileManager defaultManager] fileExistsAtPath:[_diskHomePath stringByAppendingPathComponent:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:url]]] isDirectory:NO];
 }
+
 @end
 
 
@@ -207,10 +186,7 @@ static NSCache *g_cache = nil;
     return [NSString stringWithFormat:@"%u",[[url debugDescription] hash]];
 }
 +(BOOL)isCached:(NSURL*)url{
-    if([[NSFileManager defaultManager] fileExistsAtPath:[WYCommonInfo getHashCodeWithURL:url] isDirectory:NO]){
-        return YES;
-    }
-    return NO;
+    return [[NSFileManager defaultManager] fileExistsAtPath:[WYCommonInfo getHashCodeWithURL:url] isDirectory:NO];
 }
 
 @end

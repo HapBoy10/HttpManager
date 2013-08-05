@@ -34,54 +34,8 @@ static NSOperationQueue *g_queue = nil;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSURL * url=[NSURL URLWithString:POSTDEVICE];
-    __weak WYHttpRequest *request1 = [WYHttpRequest requestWithURL:url];
-    
-<<<<<<< HEAD
-    
-    
-    
-=======
 
-    
-    NSDictionary * dic=[NSDictionary dictionaryWithObjectsAndKeys:
-                        AppKey,@"header.appKey",
-                        @"deviceToken",@"body.deviceId",
-                        [self deviceId],@"body.deviceToken",
-                        [self terminal],@"body.terminal",
-                        [self deviceType],@"body.deviceType",
-                        [self model],@"body.mode",
-                        [self resolution],@"body.resolution",
-                        [self network],@"body.netWorkType",
-                        [self carrier],@"body.operator",
-                        [self cpuSeria],@"body.cpuSerial",
-                        [self brand],@"body.brand",
-                        [self PhoneNumber],@"body.phoneNumbers",
-                        nil];
-    
-    NSArray *keys = [dic allKeys];
-    NSArray *values = [dic allValues];
     /*
-    
-    NSMutableURLRequest *myRequest=[NSMutableURLRequest requestWithURL:url];//创建一个指向目的网站的请求
-    NSString *myBoundary=@"0xKhTmLbOuNdArY";//这个很重要，用于区别输入的域
-    NSString *myContent=[NSString stringWithFormat:@"multipart/form-data;boundary=%@",myBoundary];//意思是要提交的是表单数据
-    
-<<<<<<< HEAD
-=======
->>>>>>> 8faf1874f63b12fc6a1f8a0f652d79749b6c56a3
-    UIImageView *imageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(110, 110, 160, 160)];
-    
-    
-    NSData *data = UIImagePNGRepresentation([UIImage imageNamed:@"Default@2x.png"]);
-    UIImage *image =[[WYImageDownload shareInstance] converImageToSize:CGSizeMake(160, 160) data:[NSMutableData dataWithData:data]];
-    NSLog(@"%@,%d",NSStringFromCGSize(image.size),UIImagePNGRepresentation(image).length);
-    
-    
-    imageView1.image = image;
-    [self.view addSubview:imageView1];
-    NSLog(@"%u",[[imageView1 description] hash]);
-    return;
     NSURL * url=[NSURL URLWithString:POSTDEVICE];
     __weak WYHttpRequest *request1 = [WYHttpRequest requestWithURL:url];
     
@@ -104,7 +58,7 @@ static NSOperationQueue *g_queue = nil;
     
     NSArray *keys = [dic allKeys];
     NSArray *values = [dic allValues];
-    /*
+    
     
     NSMutableURLRequest *myRequest=[NSMutableURLRequest requestWithURL:url];//创建一个指向目的网站的请求
     NSString *myBoundary=@"0xKhTmLbOuNdArY";//这个很重要，用于区别输入的域
@@ -149,7 +103,7 @@ static NSOperationQueue *g_queue = nil;
     NSLog(@"%@,%@",myGet,error);
     return;
     */
-    
+    /*
     for (int i = 0 ; i < keys.count; i++) {
         [request1 setPostValue:[values objectAtIndex:i] forKey:[keys objectAtIndex:i]];
     }
@@ -168,7 +122,6 @@ static NSOperationQueue *g_queue = nil;
     return;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:imageView];
->>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
 
     
     [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//结束
@@ -181,7 +134,7 @@ static NSOperationQueue *g_queue = nil;
     NSString * myGet=[[NSString alloc] initWithData:respondse encoding:NSUTF8StringEncoding];//接收数据
     NSLog(@"%@,%@",myGet,error);
     return;
-    */
+    
     
     for (int i = 0 ; i < keys.count; i++) {
         [request1 setPostValue:[values objectAtIndex:i] forKey:[keys objectAtIndex:i]];
@@ -199,20 +152,22 @@ static NSOperationQueue *g_queue = nil;
     [request1 requestStart];
     
     return;
-   
-    g_queue = [[NSOperationQueue alloc] init];
-    [g_queue setMaxConcurrentOperationCount:2];
+   */
 	// Do any additional setup after loading the view, typically from a nib.
     WYHttpRequest *request = [WYHttpRequest requestWithURL:[NSURL URLWithString:@"http://img3.douban.com/icon/g289842-3.jpg"]];
-    NSData *d = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://img3.douban.com/icon/g289842-3.jpg"]];
-    [request setRequestBodyData:(NSMutableData*)d];
-    [request setRequestMethod:@"POST"];
+//    NSData *d = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://img3.douban.com/icon/g289842-3.jpg"]];
+//    [request setRequestBodyData:(NSMutableData*)d];
+    [request setRequestMethod:@"GET"];
     
     [request setCompletionBlock:^{
         NSLog(@"tangwei");
     }];
     [request setReceivedBlock:^(NSData *data, long long curlength, long long total) {
-        NSLog(@"");
+        
+//        char *buffer;
+//        NSUInteger length = data.length;
+//        [data getBytes:&buffer length:length];
+//        NSLog(@"%@",data);
     }];
     
     [request setFailedBlock:^{
@@ -226,10 +181,10 @@ static NSOperationQueue *g_queue = nil;
 //    [self performSelector:@selector(ononon) withObject:nil afterDelay:.2];
     
     
-    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [self.view addSubview:_tableView];
+//    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+//    _tableView.delegate = self;
+//    _tableView.dataSource = self;
+//    [self.view addSubview:_tableView];
 }
 //-(void)ononon{
 //    
