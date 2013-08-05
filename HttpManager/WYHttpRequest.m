@@ -108,14 +108,7 @@ static NSOperationQueue *g_queue = nil;
             _requestMethod = @"POST";
         
         [_request setHTTPBody:_requestBodyData];
-<<<<<<< HEAD
-    }
-    
-=======
-        [_request setValue:[NSString stringWithFormat:@"%d",_requestBodyData.length] forHTTPHeaderField:@"Content-Length"];
-    }
 
->>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     [_request setHTTPMethod:_requestMethod];
     
     if(![self isCancelled]){
@@ -130,18 +123,7 @@ static NSOperationQueue *g_queue = nil;
 
 //接受到响应
 -(void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response{
-<<<<<<< HEAD
-    
-    _rspCode = [((NSHTTPURLResponse *)response) statusCode];
-    NSDictionary *dic = [((NSHTTPURLResponse *)response) allHeaderFields];
-    NSLog(@"didReceiveResponse:%@",dic);
     return;
-
-=======
-//    NSLog(@"didReceiveResponse:%@,%d",((NSHTTPURLResponse *)response).allHeaderFields,[((NSHTTPURLResponse *)response) statusCode]);
-    return;
-    //判断请求数据是否为空
->>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
     if(![response respondsToSelector:@selector(statusCode)] || [((NSHTTPURLResponse *)response) statusCode] < 400){
         _total = [response expectedContentLength] > 0 ? [response expectedContentLength] : 0;
         if(_total == 0) {
