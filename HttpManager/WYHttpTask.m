@@ -51,7 +51,6 @@ static NSMutableDictionary *g_mutableDictionary = nil;
 
 -(void)start{
     
-    
     self.hud = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
     self.hud.mode = MBProgressHUDAnimationZoom;
     self.hud.labelText = @"数据正在加载中，请稍后...";
