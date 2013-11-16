@@ -11,5 +11,6 @@
 
 #import "WYHttpRequest.h"
 @interface WYViewController : UIViewController<WYHttpRequestDelegate>
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

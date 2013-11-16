@@ -33,8 +33,7 @@ static NSCache *g_cache = nil;
         g_cache = [[NSCache alloc] init];
         g_cache.name = @"image";
         
-        _diskHomePath = [WYCommonInfo getDirectoryHome];
-        _diskHomePath = [_diskHomePath stringByAppendingPathComponent:@"image"];
+        _diskHomePath = [WYCommonInfo getDirectoryCacheWithFileName:@"image"];
         if (![[NSFileManager defaultManager] fileExistsAtPath:_diskHomePath])
         {
             [[NSFileManager defaultManager] createDirectoryAtPath:_diskHomePath withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -50,26 +49,29 @@ static NSCache *g_cache = nil;
     return g_imageDownload;
 }
 
--(void)downLoadWithURL:(NSURL*)url converTosize:(CGSize)size  completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile{
-    [self downLoadWithURL:url converTosize:size delegate:nil completion:completion failure:faile];
+-(void)downLoadWithURL:(NSURL*)url {
+    [self downLoadWithURL:url completion:nil failure:nil];
+}
+
+-(void)downLoadWithURL:(NSURL*)url completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile{
+    [self downLoadWithURL:url  delegate:nil completion:completion failure:faile];
 }
 
 
--(void)downLoadWithURL:(NSURL*)url converTosize:(CGSize)size delegate:(id<WYImageDownloadDelegate>)delegate completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile{
-    [self downLoadWithURL:url converTosize:size delegate:delegate completion:completion failure:faile received:nil];
+-(void)downLoadWithURL:(NSURL*)url  delegate:(id<WYImageDownloadDelegate>)delegate completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile{
+    [self downLoadWithURL:url  delegate:delegate completion:completion failure:faile received:nil];
 }
 
--(void)downLoadWithURL:(NSURL*)url converTosize:(CGSize)size delegate:(id<WYImageDownloadDelegate>)delegate completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile received:(WYImageReceivedBlock)received{
+-(void)downLoadWithURL:(NSURL*)url delegate:(id<WYImageDownloadDelegate>)delegate completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile received:(WYImageReceivedBlock)received{
     
     _imageURL = url;
-    _imageSize = size;
     
     WYImageCompletionBlock completionBlock = completion;
     WYImageFaileBlock faileBlock = faile;
     WYImageReceivedBlock receivedBlock = received;
         
     if([self isDisked:url]){//首先在磁盘和cache中查找是否存在，不存在就从网络上查找
-        NSString *filePath = [_diskHomePath stringByAppendingPathComponent:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:url]]];
+        NSString *filePath = [_diskHomePath stringByAppendingPathComponent:[WYCommonInfo getHashCodeWithURL:url]];
         
         UIImage *image = [UIImage imageWithContentsOfFile:filePath];
         if(completionBlock)
@@ -81,7 +83,10 @@ static NSCache *g_cache = nil;
     self.delegate = delegate;
     
     [request setCompletionBlock:^(NSData *data){
-        UIImage* image = [self converImageToSize:_imageSize data:request.rspMutableData];
+                
+        [self saveToLocal:[_diskHomePath stringByAppendingPathComponent:[WYCommonInfo getHashCodeWithURL:url]] withData:data];
+        
+        UIImage* image = [UIImage imageWithData:data];
         
         if([_delegate respondsToSelector:@selector(imageDownloadDidFinish:)])
             [_delegate imageDownloadDidFinish:self];
@@ -103,64 +108,16 @@ static NSCache *g_cache = nil;
     [request requestStart];
 }
 
--(UIImage *)converImageToSize:(CGSize)size data:(NSMutableData*)data{
-    
-    if(data.length == 0 || !data)
-        return nil;
-    
-    [self saveToLocal:[_diskHomePath stringByAppendingPathComponent:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:data];
-    
-    if(CGSizeEqualToSize(size, CGSizeZero))
-    {
-        return [UIImage imageWithData:data];
-    }
-    else
-    {
-        [self saveToLocal:[WYCommonInfo getDirectoryHomeWithFileName:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:data];//原图
-
-        UIImage *image = [UIImage imageWithData:data];
-        
-        CGSize origImageSize= [image size];
-        
-        CGRect newRect;
-        newRect.origin= CGPointZero;
-        //拉伸到多大
-        newRect.size.width=size.width;
-        newRect.size.height=size.height;
-        
-        //缩放倍数
-        float ratio = MIN(newRect.size.width/origImageSize.width, newRect.size.height / origImageSize.height);
-                
-        UIGraphicsBeginImageContext(newRect.size);
-        
-        CGRect projectRect;
-        projectRect.size.width =ratio * origImageSize.width;
-        projectRect.size.height=ratio * origImageSize.height;
-        projectRect.origin.x= (newRect.size.width -projectRect.size.width)/2.0;
-        projectRect.origin.y= (newRect.size.height-projectRect.size.height)/2.0;
-        
-        [image drawInRect:projectRect];
-        
-        UIImage *small = UIGraphicsGetImageFromCurrentImageContext();
-        
-        //压缩比例
-        
-        NSData *smallData=UIImageJPEGRepresentation(small, 1.0);
-
-        [self saveToLocal:[WYCommonInfo getDirectoryHomeWithFileName:[@"small_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:_imageURL]]] withData:smallData];//小图
-        
-        return [UIImage imageWithData:smallData];
-    }
-}
 
 -(void)saveToLocal:(NSString*)fileName withData:(NSData*)data{
 
-    [[NSFileManager defaultManager] createFileAtPath:fileName contents:data attributes:nil];
+//    [[NSFileManager defaultManager] createFileAtPath:fileName contents:data attributes:nil];
+    [data writeToFile:fileName atomically:YES];
 }
 
 -(BOOL)isDisked:(NSURL*)url{
 
-    return [[NSFileManager defaultManager] fileExistsAtPath:[_diskHomePath stringByAppendingPathComponent:[@"big_" stringByAppendingString:[WYCommonInfo getHashCodeWithURL:url]]] isDirectory:NO];
+    return [[NSFileManager defaultManager] fileExistsAtPath:[_diskHomePath stringByAppendingPathComponent:[WYCommonInfo getHashCodeWithURL:url]] isDirectory:NO];
 }
 
 @end
