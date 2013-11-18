@@ -21,7 +21,7 @@
 @end
 
 @interface WYHttpTask : NSObject<ASIHTTPRequestDelegate>{
-
+@public
     NSMutableData *_mutableDta;
 }
 @property(strong,nonatomic)ASIHTTPRequest *httpRequest;
