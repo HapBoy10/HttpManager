@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F09913418435E840023B232 /* NodeDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F09913118435E840023B232 /* NodeDataClass.m */; };
+		5F09913518435E840023B232 /* ParseDictionaryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F09913318435E840023B232 /* ParseDictionaryData.m */; };
 		5FCC7EC2176AAE3C00BFEE3A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FCC7EC1176AAE3C00BFEE3A /* UIKit.framework */; };
 		5FCC7EC4176AAE3C00BFEE3A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FCC7EC3176AAE3C00BFEE3A /* Foundation.framework */; };
 		5FCC7EC6176AAE3C00BFEE3A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FCC7EC5176AAE3C00BFEE3A /* CoreGraphics.framework */; };
@@ -40,6 +42,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F09913018435E840023B232 /* NodeDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeDataClass.h; sourceTree = "<group>"; };
+		5F09913118435E840023B232 /* NodeDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeDataClass.m; sourceTree = "<group>"; };
+		5F09913218435E840023B232 /* ParseDictionaryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseDictionaryData.h; sourceTree = "<group>"; };
+		5F09913318435E840023B232 /* ParseDictionaryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseDictionaryData.m; sourceTree = "<group>"; };
 		5FCC7EBD176AAE3C00BFEE3A /* HttpManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HttpManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FCC7EC1176AAE3C00BFEE3A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5FCC7EC3176AAE3C00BFEE3A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -109,6 +115,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F09912F18435E650023B232 /* fanshe */ = {
+			isa = PBXGroup;
+			children = (
+				5F09913018435E840023B232 /* NodeDataClass.h */,
+				5F09913118435E840023B232 /* NodeDataClass.m */,
+				5F09913218435E840023B232 /* ParseDictionaryData.h */,
+				5F09913318435E840023B232 /* ParseDictionaryData.m */,
+			);
+			name = fanshe;
+			sourceTree = "<group>";
+		};
 		5FCC7EB2176AAE3C00BFEE3A = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +161,7 @@
 		5FCC7EC7176AAE3C00BFEE3A /* HttpManager */ = {
 			isa = PBXGroup;
 			children = (
+				5F09912F18435E650023B232 /* fanshe */,
 				E28E33EB17C15BD800B537F1 /* WYNet */,
 				E2CE17C1176BE80F00BCDBE7 /* WYHttp */,
 				5FCC7ED0176AAE3D00BFEE3A /* WYAppDelegate.h */,
@@ -303,6 +321,8 @@
 				E28E340A17C15BD800B537F1 /* WYNetOperation.m in Sources */,
 				E28E340B17C15BD800B537F1 /* Reachability.m in Sources */,
 				E2FAD3311836EF2B00BCC04E /* WYCell.m in Sources */,
+				5F09913418435E840023B232 /* NodeDataClass.m in Sources */,
+				5F09913518435E840023B232 /* ParseDictionaryData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
