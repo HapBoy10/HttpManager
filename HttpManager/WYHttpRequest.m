@@ -107,19 +107,18 @@ static NSOperationQueue *g_queue = nil;
             _requestMethod = @"POST";
         
         [_request setHTTPBody:_requestBodyData];
-<<<<<<< HEAD
-
-    [_request setHTTPMethod:_requestMethod];
-=======
 
         [self addHeaderValue:[NSString stringWithFormat:@"%d",_requestBodyData.length] forKey:@"Content-Length"];
     }
 
+    if([_requestMethod isEqualToString:@"GET"]){
+    
+        [self setRangeHeader];
+    }
+    
     [self buildHeader];
->>>>>>> 6748650a2361f97928b2c62d563d51a83368d8f5
     
     [_request setHTTPMethod:_requestMethod];
-    [_request setTimeoutInterval:-1];
     if(![self isCancelled]){
         
         _requestConnection = [[NSURLConnection alloc] initWithRequest:_request delegate:self startImmediately:_startImmediately];
@@ -141,11 +140,17 @@ static NSOperationQueue *g_queue = nil;
     
     if(failedBlock)
         failedBlock();
+    
+    DLog(@"%@",error);
 }
 
 -(void)connection:(NSURLConnection*)connection didReceiveData:(NSData *)data{
     
     [_rspMutableData appendData:data];
+    
+    [self wirteDataToFileWithData:data];
+    
+    
     if([_delegate respondsToSelector:@selector(requestRcvData:didReceiveData:curlength:total:)])
         [_delegate requestRcvData:self didReceiveData:data curlength:_rspMutableData.length total:_total];
     
@@ -156,9 +161,6 @@ static NSOperationQueue *g_queue = nil;
 
 //接受到响应
 -(void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response{
-<<<<<<< HEAD
-    return;
-=======
     
     _rspCode = [((NSHTTPURLResponse *)response) statusCode];
     NSDictionary *dic = [((NSHTTPURLResponse *)response) allHeaderFields];
@@ -168,7 +170,6 @@ static NSOperationQueue *g_queue = nil;
     return;
     
     //判断请求数据是否为空
->>>>>>> 6748650a2361f97928b2c62d563d51a83368d8f5
     if(![response respondsToSelector:@selector(statusCode)] || [((NSHTTPURLResponse *)response) statusCode] < 400){
         _total = [response expectedContentLength] > 0 ? [response expectedContentLength] : 0;
         if(_total == 0) {
@@ -192,7 +193,7 @@ static NSOperationQueue *g_queue = nil;
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite{
 
     float percent = totalBytesWritten * 100 / totalBytesExpectedToWrite;
-    DLog(@"%f",percent);
+
     if([_delegate respondsToSelector:@selector(requestSendData:percent:)])
         [_delegate requestSendData:self percent:percent];
     
@@ -202,9 +203,9 @@ static NSOperationQueue *g_queue = nil;
 
 //数据接收完成
 -(void)connectionDidFinishLoading:(NSURLConnection*)connection{
-    
-    DLog(@"%@",[[NSString alloc] initWithData:_rspMutableData encoding:NSUTF8StringEncoding]);
-    
+        
+    [self removTmpFileWithUrl:[_request.URL absoluteString]];
+
     if([_delegate respondsToSelector:@selector(requestFinish:totalData:)])
         [_delegate requestFinish:self totalData:_rspMutableData];
     
@@ -277,12 +278,11 @@ static NSOperationQueue *g_queue = nil;
         
         [_request setValue:[aDic valueForKey:@"value"] forHTTPHeaderField:[aDic valueForKey:@"key"]];
     }
-    
 }
 
 -(void)buildPostBody{
     
-    if(nil == _postData || !_postData.count)
+    if(nil == _postData || _postData.count == 0)
         return;
         
     NSMutableArray *keys = [NSMutableArray arrayWithCapacity:10];
@@ -314,15 +314,68 @@ static NSOperationQueue *g_queue = nil;
     [_requestBodyData appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];//结束
 }
 
--(unsigned long long)setPostLength{
-    unsigned long long count = 0;
-    count = _requestBodyData.length;
-    return count;
+-(void)setRangeHeader{
+
+    NSString *url = [_request.URL absoluteString];
+    NSString *tempPath = [self getTmpPath:url];
+
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    if([manager fileExistsAtPath:tempPath]){
+    
+        unsigned long long dic = [manager attributesOfItemAtPath:tempPath error:nil].fileSize;
+        
+        [self addHeaderValue:[NSString stringWithFormat:@"bytes=%llu-",dic] forKey:@"range"];
+    }
 }
 
--(NSData*)mutableArrayToData{
+-(void)removTmpFileWithUrl:(NSString *)s{
+
+    NSFileManager *f = [NSFileManager defaultManager];
     
-    return [NSKeyedArchiver archivedDataWithRootObject:_postData];
+    if([f fileExistsAtPath:[self getTmpPath:s]]){
+    
+        [f removeItemAtPath:[self getTmpPath:s] error:nil];
+    }else{
+    
+        DLog(@"文件不存在：%@",s);
+    }
+}
+
+-(NSString*)getTmpPath:(NSString *)url{
+
+    NSString *tempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%u",[url hash]]];;
+    return tempPath;
+}
+
+//断点
+-(void)wirteDataToFileWithData:(NSData *)dta{
+
+    NSString *url = [_request.URL absoluteString];
+    NSString *tempPath = [self getTmpPath:url];
+    
+    NSOutputStream *stream = [[NSOutputStream alloc] initToFileAtPath:tempPath append:YES];
+    [stream open];
+    
+    NSInteger       dataLength;
+    const uint8_t * dataBytes;
+    NSInteger       bytesWritten;
+    NSInteger       bytesWrittenSoFar;
+    
+    // 接收到的数据长度
+    dataLength = [dta length];
+    dataBytes  = [dta bytes];
+    
+    bytesWrittenSoFar = 0;
+    do {
+        bytesWritten = [stream write:&dataBytes[bytesWrittenSoFar] maxLength:dataLength - bytesWrittenSoFar];
+        assert(bytesWritten != 0);
+        if (bytesWritten == -1) {
+            break;
+        } else {
+            bytesWrittenSoFar += bytesWritten;
+        }
+    } while (bytesWrittenSoFar != dataLength);
+    
 }
 
 -(void)setStrartBlock:(WYHttpBasicBlock)aBlock{

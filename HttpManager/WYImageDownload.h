@@ -25,13 +25,14 @@ typedef void (^WYImageReceivedBlock)(long long total);;
 
 +(WYImageDownload*)shareInstance;
 
--(void)downLoadWithURL:(NSURL*)url converTosize:(CGSize)size  completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile;
+-(void)downLoadWithURL:(NSURL*)url ;
 
--(void)downLoadWithURL:(NSURL*)url converTosize:(CGSize)size delegate:(id<WYImageDownloadDelegate>)delegate completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile;
+-(void)downLoadWithURL:(NSURL*)url completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile;
 
--(void)downLoadWithURL:(NSURL*)url converTosize:(CGSize)size delegate:(id<WYImageDownloadDelegate>)delegate completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile received:(WYImageReceivedBlock)received;
+-(void)downLoadWithURL:(NSURL*)url delegate:(id<WYImageDownloadDelegate>)delegate completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile;
 
--(UIImage *)converImageToSize:(CGSize)size data:(NSMutableData*)data;
+-(void)downLoadWithURL:(NSURL*)url delegate:(id<WYImageDownloadDelegate>)delegate completion:(WYImageCompletionBlock)completion failure:(WYImageFaileBlock)faile received:(WYImageReceivedBlock)received;
+
 
 //-(void)setReceivedBlock:(WYImageReceivedBlock)aBlock;
 //-(void)setCompletionBlock:(WYImageCompletionBlock)aBlock;

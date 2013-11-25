@@ -40,12 +40,12 @@ typedef void (^WYHttpComplete)(NSData *data);
 @property(assign) BOOL startImmediately;
 @property(assign) NSTimeInterval requestTimeOut;
 @property(assign,readonly) NSInteger rspCode;
-@property(nonatomic,retain) NSURL *requestURL;
-@property(nonatomic,retain) NSString *requestMethod;
-@property(nonatomic,retain) NSMutableData *requestBodyData;
+@property(nonatomic,strong) NSURL *requestURL;
+@property(nonatomic,strong) NSString *requestMethod;
+@property(nonatomic,strong) NSMutableData *requestBodyData;
 @property(readonly) long long total;
-@property(nonatomic,readonly,retain) NSMutableData *rspMutableData;
-@property(retain) NSDictionary *userInfo;
+@property(nonatomic,readonly,strong) NSMutableData *rspMutableData;
+@property(strong) NSDictionary *userInfo;
 @property(nonatomic,assign) id<WYHttpRequestDelegate>delegate;
 
 

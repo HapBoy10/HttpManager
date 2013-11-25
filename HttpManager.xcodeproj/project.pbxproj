@@ -19,9 +19,24 @@
 		5FCC7EDB176AAE3D00BFEE3A /* WYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC7EDA176AAE3D00BFEE3A /* WYViewController.m */; };
 		5FCC7EDE176AAE3D00BFEE3A /* WYViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FCC7EDC176AAE3D00BFEE3A /* WYViewController.xib */; };
 		5FCC7EE6176AAEE800BFEE3A /* WYHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC7EE5176AAEE800BFEE3A /* WYHttpRequest.m */; };
-		5FCFF34817AFABC800617450 /* WYHttpTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCFF34517AFABC800617450 /* WYHttpTask.m */; };
-		5FCFF34917AFABC800617450 /* WYImageDownLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCFF34717AFABC800617450 /* WYImageDownLoader.m */; };
+		E28E340317C15BD800B537F1 /* NSData+MKBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E33F017C15BD800B537F1 /* NSData+MKBase64.m */; };
+		E28E340417C15BD800B537F1 /* NSDate+RFC1123.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E33F217C15BD800B537F1 /* NSDate+RFC1123.m */; };
+		E28E340517C15BD800B537F1 /* NSDictionary+RequestEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E33F417C15BD800B537F1 /* NSDictionary+RequestEncoding.m */; };
+		E28E340617C15BD800B537F1 /* NSString+WYNetKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E33F617C15BD800B537F1 /* NSString+WYNetKitAdditions.m */; };
+		E28E340717C15BD800B537F1 /* UIAlertView+WYNetKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E33F817C15BD800B537F1 /* UIAlertView+WYNetKitAdditions.m */; };
+		E28E340817C15BD800B537F1 /* UIImageView+WYNetKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E33FA17C15BD800B537F1 /* UIImageView+WYNetKitAdditions.m */; };
+		E28E340917C15BD800B537F1 /* WYNetEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E33FC17C15BD800B537F1 /* WYNetEngine.m */; };
+		E28E340A17C15BD800B537F1 /* WYNetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E33FF17C15BD800B537F1 /* WYNetOperation.m */; };
+		E28E340B17C15BD800B537F1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E28E340117C15BD800B537F1 /* Reachability.m */; };
+		E28E340D17C15C4000B537F1 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E28E340C17C15C4000B537F1 /* ImageIO.framework */; };
+		E28E340F17C15C4900B537F1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E28E340E17C15C4900B537F1 /* SystemConfiguration.framework */; };
+		E28E341117C15C5300B537F1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E28E341017C15C5300B537F1 /* CFNetwork.framework */; };
+		E28E341317C15C6100B537F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E28E341217C15C6100B537F1 /* Security.framework */; };
+		E28E341517C15C7D00B537F1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E28E341417C15C7D00B537F1 /* QuartzCore.framework */; };
 		E2CE17C6176BF7EA00BCDBE7 /* WYImageDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CE17C5176BF7EA00BCDBE7 /* WYImageDownload.m */; };
+		E2FAD32E1836EA9400BCC04E /* big.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2FAD32D1836EA9400BCC04E /* big.jpg */; };
+		E2FAD3311836EF2B00BCC04E /* WYCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FAD3301836EF2A00BCC04E /* WYCell.m */; };
+		E2FAD3331836EF3800BCC04E /* WYCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2FAD3321836EF3800BCC04E /* WYCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,12 +58,36 @@
 		5FCC7EDD176AAE3D00BFEE3A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WYViewController.xib; sourceTree = "<group>"; };
 		5FCC7EE4176AAEE800BFEE3A /* WYHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYHttpRequest.h; sourceTree = "<group>"; };
 		5FCC7EE5176AAEE800BFEE3A /* WYHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYHttpRequest.m; sourceTree = "<group>"; };
-		5FCFF34417AFABC800617450 /* WYHttpTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYHttpTask.h; sourceTree = "<group>"; };
-		5FCFF34517AFABC800617450 /* WYHttpTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYHttpTask.m; sourceTree = "<group>"; };
-		5FCFF34617AFABC800617450 /* WYImageDownLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYImageDownLoader.h; sourceTree = "<group>"; };
-		5FCFF34717AFABC800617450 /* WYImageDownLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYImageDownLoader.m; sourceTree = "<group>"; };
+		E28E33EF17C15BD800B537F1 /* NSData+MKBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MKBase64.h"; sourceTree = "<group>"; };
+		E28E33F017C15BD800B537F1 /* NSData+MKBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MKBase64.m"; sourceTree = "<group>"; };
+		E28E33F117C15BD800B537F1 /* NSDate+RFC1123.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RFC1123.h"; sourceTree = "<group>"; };
+		E28E33F217C15BD800B537F1 /* NSDate+RFC1123.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RFC1123.m"; sourceTree = "<group>"; };
+		E28E33F317C15BD800B537F1 /* NSDictionary+RequestEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+RequestEncoding.h"; sourceTree = "<group>"; };
+		E28E33F417C15BD800B537F1 /* NSDictionary+RequestEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+RequestEncoding.m"; sourceTree = "<group>"; };
+		E28E33F517C15BD800B537F1 /* NSString+WYNetKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+WYNetKitAdditions.h"; sourceTree = "<group>"; };
+		E28E33F617C15BD800B537F1 /* NSString+WYNetKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+WYNetKitAdditions.m"; sourceTree = "<group>"; };
+		E28E33F717C15BD800B537F1 /* UIAlertView+WYNetKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+WYNetKitAdditions.h"; sourceTree = "<group>"; };
+		E28E33F817C15BD800B537F1 /* UIAlertView+WYNetKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+WYNetKitAdditions.m"; sourceTree = "<group>"; };
+		E28E33F917C15BD800B537F1 /* UIImageView+WYNetKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WYNetKitAdditions.h"; sourceTree = "<group>"; };
+		E28E33FA17C15BD800B537F1 /* UIImageView+WYNetKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WYNetKitAdditions.m"; sourceTree = "<group>"; };
+		E28E33FB17C15BD800B537F1 /* WYNetEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYNetEngine.h; sourceTree = "<group>"; };
+		E28E33FC17C15BD800B537F1 /* WYNetEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYNetEngine.m; sourceTree = "<group>"; };
+		E28E33FD17C15BD800B537F1 /* WYNetKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYNetKit.h; sourceTree = "<group>"; };
+		E28E33FE17C15BD800B537F1 /* WYNetOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYNetOperation.h; sourceTree = "<group>"; };
+		E28E33FF17C15BD800B537F1 /* WYNetOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYNetOperation.m; sourceTree = "<group>"; };
+		E28E340017C15BD800B537F1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		E28E340117C15BD800B537F1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		E28E340C17C15C4000B537F1 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		E28E340E17C15C4900B537F1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E28E341017C15C5300B537F1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		E28E341217C15C6100B537F1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		E28E341417C15C7D00B537F1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E2CE17C4176BF7EA00BCDBE7 /* WYImageDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYImageDownload.h; sourceTree = "<group>"; };
 		E2CE17C5176BF7EA00BCDBE7 /* WYImageDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYImageDownload.m; sourceTree = "<group>"; };
+		E2FAD32D1836EA9400BCC04E /* big.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = big.jpg; sourceTree = "<group>"; };
+		E2FAD32F1836EF2A00BCC04E /* WYCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYCell.h; sourceTree = "<group>"; };
+		E2FAD3301836EF2A00BCC04E /* WYCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYCell.m; sourceTree = "<group>"; };
+		E2FAD3321836EF3800BCC04E /* WYCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +95,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E28E341517C15C7D00B537F1 /* QuartzCore.framework in Frameworks */,
+				E28E341317C15C6100B537F1 /* Security.framework in Frameworks */,
+				E28E341117C15C5300B537F1 /* CFNetwork.framework in Frameworks */,
+				E28E340F17C15C4900B537F1 /* SystemConfiguration.framework in Frameworks */,
+				E28E340D17C15C4000B537F1 /* ImageIO.framework in Frameworks */,
 				5FCC7EC2176AAE3C00BFEE3A /* UIKit.framework in Frameworks */,
 				5FCC7EC4176AAE3C00BFEE3A /* Foundation.framework in Frameworks */,
 				5FCC7EC6176AAE3C00BFEE3A /* CoreGraphics.framework in Frameworks */,
@@ -68,6 +112,11 @@
 		5FCC7EB2176AAE3C00BFEE3A = {
 			isa = PBXGroup;
 			children = (
+				E28E341417C15C7D00B537F1 /* QuartzCore.framework */,
+				E28E341217C15C6100B537F1 /* Security.framework */,
+				E28E341017C15C5300B537F1 /* CFNetwork.framework */,
+				E28E340E17C15C4900B537F1 /* SystemConfiguration.framework */,
+				E28E340C17C15C4000B537F1 /* ImageIO.framework */,
 				5FCC7EC7176AAE3C00BFEE3A /* HttpManager */,
 				5FCC7EC0176AAE3C00BFEE3A /* Frameworks */,
 				5FCC7EBE176AAE3C00BFEE3A /* Products */,
@@ -95,10 +144,15 @@
 		5FCC7EC7176AAE3C00BFEE3A /* HttpManager */ = {
 			isa = PBXGroup;
 			children = (
+				E28E33EB17C15BD800B537F1 /* WYNet */,
 				E2CE17C1176BE80F00BCDBE7 /* WYHttp */,
 				5FCC7ED0176AAE3D00BFEE3A /* WYAppDelegate.h */,
 				5FCC7ED1176AAE3D00BFEE3A /* WYAppDelegate.m */,
+				E2FAD32F1836EF2A00BCC04E /* WYCell.h */,
+				E2FAD3301836EF2A00BCC04E /* WYCell.m */,
+				E2FAD3321836EF3800BCC04E /* WYCell.xib */,
 				5FCC7ED9176AAE3D00BFEE3A /* WYViewController.h */,
+				E2FAD32D1836EA9400BCC04E /* big.jpg */,
 				5FCC7EDA176AAE3D00BFEE3A /* WYViewController.m */,
 				5FCC7EDC176AAE3D00BFEE3A /* WYViewController.xib */,
 				5FCC7EC8176AAE3C00BFEE3A /* Supporting Files */,
@@ -120,13 +174,43 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		E28E33EB17C15BD800B537F1 /* WYNet */ = {
+			isa = PBXGroup;
+			children = (
+				E28E33EC17C15BD800B537F1 /* Categories */,
+				E28E33FE17C15BD800B537F1 /* WYNetOperation.h */,
+				E28E33FF17C15BD800B537F1 /* WYNetOperation.m */,
+				E28E33FB17C15BD800B537F1 /* WYNetEngine.h */,
+				E28E33FC17C15BD800B537F1 /* WYNetEngine.m */,
+				E28E33FD17C15BD800B537F1 /* WYNetKit.h */,
+				E28E340017C15BD800B537F1 /* Reachability.h */,
+				E28E340117C15BD800B537F1 /* Reachability.m */,
+			);
+			path = WYNet;
+			sourceTree = "<group>";
+		};
+		E28E33EC17C15BD800B537F1 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				E28E33EF17C15BD800B537F1 /* NSData+MKBase64.h */,
+				E28E33F017C15BD800B537F1 /* NSData+MKBase64.m */,
+				E28E33F117C15BD800B537F1 /* NSDate+RFC1123.h */,
+				E28E33F217C15BD800B537F1 /* NSDate+RFC1123.m */,
+				E28E33F317C15BD800B537F1 /* NSDictionary+RequestEncoding.h */,
+				E28E33F417C15BD800B537F1 /* NSDictionary+RequestEncoding.m */,
+				E28E33F517C15BD800B537F1 /* NSString+WYNetKitAdditions.h */,
+				E28E33F617C15BD800B537F1 /* NSString+WYNetKitAdditions.m */,
+				E28E33F717C15BD800B537F1 /* UIAlertView+WYNetKitAdditions.h */,
+				E28E33F817C15BD800B537F1 /* UIAlertView+WYNetKitAdditions.m */,
+				E28E33F917C15BD800B537F1 /* UIImageView+WYNetKitAdditions.h */,
+				E28E33FA17C15BD800B537F1 /* UIImageView+WYNetKitAdditions.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		E2CE17C1176BE80F00BCDBE7 /* WYHttp */ = {
 			isa = PBXGroup;
 			children = (
-				5FCFF34417AFABC800617450 /* WYHttpTask.h */,
-				5FCFF34517AFABC800617450 /* WYHttpTask.m */,
-				5FCFF34617AFABC800617450 /* WYImageDownLoader.h */,
-				5FCFF34717AFABC800617450 /* WYImageDownLoader.m */,
 				5FCC7EE4176AAEE800BFEE3A /* WYHttpRequest.h */,
 				5FCC7EE5176AAEE800BFEE3A /* WYHttpRequest.m */,
 				E2CE17C4176BF7EA00BCDBE7 /* WYImageDownload.h */,
@@ -192,6 +276,8 @@
 				5FCC7ED6176AAE3D00BFEE3A /* Default@2x.png in Resources */,
 				5FCC7ED8176AAE3D00BFEE3A /* Default-568h@2x.png in Resources */,
 				5FCC7EDE176AAE3D00BFEE3A /* WYViewController.xib in Resources */,
+				E2FAD32E1836EA9400BCC04E /* big.jpg in Resources */,
+				E2FAD3331836EF3800BCC04E /* WYCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,8 +293,16 @@
 				5FCC7EDB176AAE3D00BFEE3A /* WYViewController.m in Sources */,
 				5FCC7EE6176AAEE800BFEE3A /* WYHttpRequest.m in Sources */,
 				E2CE17C6176BF7EA00BCDBE7 /* WYImageDownload.m in Sources */,
-				5FCFF34817AFABC800617450 /* WYHttpTask.m in Sources */,
-				5FCFF34917AFABC800617450 /* WYImageDownLoader.m in Sources */,
+				E28E340317C15BD800B537F1 /* NSData+MKBase64.m in Sources */,
+				E28E340417C15BD800B537F1 /* NSDate+RFC1123.m in Sources */,
+				E28E340517C15BD800B537F1 /* NSDictionary+RequestEncoding.m in Sources */,
+				E28E340617C15BD800B537F1 /* NSString+WYNetKitAdditions.m in Sources */,
+				E28E340717C15BD800B537F1 /* UIAlertView+WYNetKitAdditions.m in Sources */,
+				E28E340817C15BD800B537F1 /* UIImageView+WYNetKitAdditions.m in Sources */,
+				E28E340917C15BD800B537F1 /* WYNetEngine.m in Sources */,
+				E28E340A17C15BD800B537F1 /* WYNetOperation.m in Sources */,
+				E28E340B17C15BD800B537F1 /* Reachability.m in Sources */,
+				E2FAD3311836EF2B00BCC04E /* WYCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

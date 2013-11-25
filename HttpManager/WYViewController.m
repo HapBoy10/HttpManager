@@ -11,11 +11,14 @@
 #import "WYImageDownload.h"
 #import <sys/sysctl.h>
 
+#define uploadurl [@"http://aiyobucuo.com/qiaquan/index.php?" stringByAppendingString:@"app=appapi&mod=Upload&act=do_upload"]
 
-static NSOperationQueue *g_queue = nil;
+#import "WYCell.h"
+
 @interface WYViewController ()<UITableViewDataSource,UITableViewDelegate,WYImageDownloadDelegate>
 {
     UITableView *_tableView;
+    NSMutableArray *_array;
 }
 @end
 
@@ -27,197 +30,101 @@ static NSOperationQueue *g_queue = nil;
 
 #define AppKey  @"27e1615212f3c6ea846ed6c412df1361ce97f006ee20bb5aa2483a3b61d5cadd"
 
+@synthesize tableView = _tableView;
 -(void)imageDownloadDidFinish:(WYImageDownload *)download{
 
+    DLog(@"%@",download);
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
 
-    /*
-    NSURL * url=[NSURL URLWithString:POSTDEVICE];
-    __weak WYHttpRequest *request1 = [WYHttpRequest requestWithURL:url];
     
-
-    
-    NSDictionary * dic=[NSDictionary dictionaryWithObjectsAndKeys:
-                        AppKey,@"header.appKey",
-                        @"deviceToken",@"body.deviceId",
-                        [self deviceId],@"body.deviceToken",
-                        [self terminal],@"body.terminal",
-                        [self deviceType],@"body.deviceType",
-                        [self model],@"body.mode",
-                        [self resolution],@"body.resolution",
-                        [self network],@"body.netWorkType",
-                        [self carrier],@"body.operator",
-                        [self cpuSeria],@"body.cpuSerial",
-                        [self brand],@"body.brand",
-                        [self PhoneNumber],@"body.phoneNumbers",
-                        nil];
-    
-    NSArray *keys = [dic allKeys];
-    NSArray *values = [dic allValues];
-    
-    
-    NSMutableURLRequest *myRequest=[NSMutableURLRequest requestWithURL:url];//创建一个指向目的网站的请求
-    NSString *myBoundary=@"0xKhTmLbOuNdArY";//这个很重要，用于区别输入的域
-    NSString *myContent=[NSString stringWithFormat:@"multipart/form-data;boundary=%@",myBoundary];//意思是要提交的是表单数据
-    
->>>>>>> 2e1050a903aed66efaeccdec7eaac9101a04c542
-    [myRequest setValue:myContent forHTTPHeaderField:@"Content-type"];//定义内容类型
-    
-    NSMutableData * body=[NSMutableData data];//这个用于暂存你要提交的数据
-    //下面开始增加你的数据了
-    
-    //我这里假设表单中，有两个字段，一个叫user,一个叫password
-    
-    //字段与字段之间要用到boundary分开
-    
-    [body appendData:[[NSString stringWithFormat:@"\n--%@\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//表示开始
-    
-    NSString *endItemBoundary = [NSString stringWithFormat:@"\r\n--%@\r\n",myBoundary];
-    for (int i = 0; i < keys.count; i++) {
-        
-        NSLog(@"key=%@,value=%@",[keys objectAtIndex:i],[values objectAtIndex:i]);
-        
-        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",[keys objectAtIndex:i]] dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [body appendData:[[values objectAtIndex:i] dataUsingEncoding:NSUTF8StringEncoding]]; 
-        
-        if(i != keys.count - 1)
-            [body appendData:[endItemBoundary dataUsingEncoding:NSUTF8StringEncoding]];
-    }
-<<<<<<< HEAD
-=======
-
-    
-    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//结束
-    
-    [myRequest setHTTPMethod:@"POST"];
-    [myRequest setHTTPBody:body];
-    NSError *error;
-    NSData *respondse=[NSURLConnection sendSynchronousRequest:myRequest returningResponse:nil error:&error];//创建连接
-    
-    NSString * myGet=[[NSString alloc] initWithData:respondse encoding:NSUTF8StringEncoding];//接收数据
-    NSLog(@"%@,%@",myGet,error);
-    return;
-    */
-    /*
-    for (int i = 0 ; i < keys.count; i++) {
-        [request1 setPostValue:[values objectAtIndex:i] forKey:[keys objectAtIndex:i]];
-    }
-    
-    [request1 setCompletionBlock:^{
-        NSLog(@"success:%@",[[NSString alloc] initWithData:request1.rspMutableData encoding:NSUTF8StringEncoding]);
-    }];
-    
-    
-    [request1 setFailedBlock:^{
-        NSLog(@"Failed");
-    }];
-    
-    [request1 requestStart];
-    
-    return;
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:imageView];
-
-    
-    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",myBoundary] dataUsingEncoding:NSUTF8StringEncoding]];//结束
-    
-    [myRequest setHTTPMethod:@"POST"];
-    [myRequest setHTTPBody:body];
-    NSError *error;
-    NSData *respondse=[NSURLConnection sendSynchronousRequest:myRequest returningResponse:nil error:&error];//创建连接
-    
-    NSString * myGet=[[NSString alloc] initWithData:respondse encoding:NSUTF8StringEncoding];//接收数据
-    NSLog(@"%@,%@",myGet,error);
-    return;
-    
-    
-    for (int i = 0 ; i < keys.count; i++) {
-        [request1 setPostValue:[values objectAtIndex:i] forKey:[keys objectAtIndex:i]];
-    }
-    
-    [request1 setCompletionBlock:^{
-        NSLog(@"success:%@",[[NSString alloc] initWithData:request1.rspMutableData encoding:NSUTF8StringEncoding]);
-    }];
-    
-    
-    [request1 setFailedBlock:^{
-        NSLog(@"Failed");
-    }];
-    
-    [request1 requestStart];
-    
-    return;
-   */
-	// Do any additional setup after loading the view, typically from a nib.
-    WYHttpRequest *request = [WYHttpRequest requestWithURL:[NSURL URLWithString:@"http://img3.douban.com/icon/g289842-3.jpg"]];
-//    NSData *d = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://img3.douban.com/icon/g289842-3.jpg"]];
-//    [request setRequestBodyData:(NSMutableData*)d];
-    [request setRequestMethod:@"GET"];
-    
-    [request setCompletionBlock:^{
-        NSLog(@"tangwei");
-    }];
-    [request setReceivedBlock:^(NSData *data, long long curlength, long long total) {
-        
-//        char *buffer;
-//        NSUInteger length = data.length;
-//        [data getBytes:&buffer length:length];
-//        NSLog(@"%@",data);
-    }];
-    
-    [request setFailedBlock:^{
-        NSLog(@"error");
-    }];
-    
-    [request requestStart];
-    
-    
+    _array = [NSMutableArray arrayWithCapacity:10];
+    [_array addObject:@"http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1205/21/c0/11692434_1337571824967.jpg"];
+    [_array addObject:@"http://img.xshuma.com/201203/205354120322908066.jpg"];
+    [_array addObject:@"http://www.gov234.cn/pic.asp?url=http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1206/12/c2/11972533_1339493488094.jpg"];
+    [_array addObject:@"http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1204/16/c0/11268288_1334561385756.jpg"];
+    [_array addObject:@"http://i1.img.969g.com/down/imgx2013/02/20/206_170544_4e8b8.jpg"];
+    [_array addObject:@"http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1206/25/c1/12115987_1340604105848.jpg"];
+    [_array addObject:@"http://www.33.la/uploads/20130217bz/845.jpg"];
+    [_array addObject:@"http://t10.baidu.com/it/u=1619568749,1336149052&fm=21&gp=0.jpg"];
+    [_array addObject:@"http://pic23.nipic.com/20120904/10866944_101420679148_2.jpg"];
+    [_array addObject:@"http://img.wallba.com/Public/Upload/Image/mingxingbizi/gaoqingmeinv/8/20113117013843.jpg"];
+    [_array addObject:@"http://img.wallba.com/Public/Upload/Image/mingxingbizi/hejing/12/201142014124972.jpg"];
+    [_array addObject:@"http://attach.bbs.miui.com/forum/201203/10/072855r3a5xzqzge0qaqgg.jpg"];
+    [_array addObject:@"http://bbra.cn/Uploadfiles/imgs/20110221/gaoqing/009.jpg"];
+    [_array addObject:@"http://attach.bbs.miui.com/forum/month_1011/1011250123b74b7b4f6a74e8dc.jpg"];
+    [_array addObject:@"http://pic.4j4j.cn/upload/pic/20130626/24251116c6.jpg"];
+    [_array addObject:@"http://img2.niutuku.com/desk/1208/1308/ntk-1308-43168.jpg"];
+    [_array addObject:@"http://www.79n.cn/uploads/allimg/121213/1-121213000914.jpg"];
+    [_array addObject:@"http://h.hiphotos.bdimg.com/album/w%3D2048/sign=746841b10823dd542173a068e531b1de/cc11728b4710b9127787cb2bc2fdfc03934522a4.jpg"];
+    [_array addObject:@"http://pic3.bbzhi.com/xitongbizhi/gaoqingkuanpingfengguangbizhi1/computer_kuan_266488_12.jpg"];
    
-//    [self performSelector:@selector(ononon) withObject:nil afterDelay:.2];
-    
-    
-//    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-//    _tableView.delegate = self;
-//    _tableView.dataSource = self;
-//    [self.view addSubview:_tableView];
 }
-//-(void)ononon{
-//    
-//    WYHttpRequest *request = [WYHttpRequest requestWithURL:[NSURL URLWithString:@"http://img3.douban.com/icon/g289842-3.jpg"]];
-//    request.delegate = self;
-//    [request requestStart];
-//}
+-(void)requestSendData:(WYHttpRequest *)request percent:(float)percent{
+
+    DLog(@"%.2f",percent);
+}
+
 
 -(void)requestFinish:(WYHttpRequest *)request totalData:(NSMutableData *)data{
-
+    DLog(@"%@,%@",data,[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 }
 -(void)requestFailed:(WYHttpRequest *)request didFailWithError:(NSError *)error{
-
+    DLog(@"%@",error);
 }
 
 -(void)requestRcvData:(WYHttpRequest *)request didReceiveData:(NSData *)data curTotal:(NSMutableData *)curTotal{
-
+    DLog(@"requestRcvData");
 }
 
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+
+    WYHttpRequest *request = [WYHttpRequest requestWithURL:[NSURL URLWithString:uploadurl]];
+    request.delegate = self;
+    NSString *s = [[NSBundle mainBundle] pathForResource:@"big" ofType:@"jpg"];
+    NSData *data = [NSData dataWithContentsOfFile:s];
+    
+    request.requestBodyData = [NSMutableData dataWithData:data];
+    
+    [request requestStart];
+    
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+
+    return 1;
+}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 100;
+    return [_array count];
+}
+
+-(void)on_btn:(UIButton *)btn{
+
+    
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     static NSString *defaultKey = @"sdjdsjkdshjkdsfkjh";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:defaultKey];
+    WYCell *cell = [tableView dequeueReusableCellWithIdentifier:defaultKey];
     if(!cell){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:defaultKey];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"WYCell" owner:self options:nil] objectAtIndex:0];
+        [cell.imageBtn addTarget:self action:@selector(on_btn:) forControlEvents:UIControlEventTouchUpInside];
     }
+    NSString *s = _array[indexPath.row];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@",indexPath];
+    [[WYImageDownload shareInstance] downLoadWithURL:[NSURL URLWithString:s] delegate:self completion:^(UIImage *image) {
+        [cell.imageBtn setBackgroundImage:image forState:UIControlStateNormal];
+    } failure:^{
+        DLog(@"file");
+    }];
+    
+    cell.tag = 10000 + indexPath.row;
+    
+    cell.labelUrl.text = s;
     return cell;
     
 }
@@ -229,68 +136,8 @@ static NSOperationQueue *g_queue = nil;
 }
 
 
-//基本信息采集
--(NSString*)cpuSeria{
-    return @"ceshi";
+- (void)viewDidUnload {
+    [self setTableView:nil];
+    [super viewDidUnload];
 }
--(NSString *)network{
-    
-    return @"Wifi";
-}
--(NSString*)carrier{
-
-    return @"ceshi";
-}
--(NSString *)deviceType{
-    
-    return  @"Ios";
-}
--(NSString *)sdkVersion{
-    return [[UIDevice currentDevice]systemVersion];
-}
--(NSString *)resolution{
-    CGRect rect_screen = [[UIScreen mainScreen]bounds];
-    CGSize size_screen = rect_screen.size;
-    CGFloat scale_screen = [UIScreen mainScreen].scale;
-    return [NSString stringWithFormat:@"%f",size_screen.width*size_screen.height*scale_screen];
-}
--(NSString *)uid{
-
-    return @"uid";
-}
--(NSString *)model{
-    
-    return [[UIDevice currentDevice]model];
-}
--(NSString *)cpu{
-    return @"cpu";
-}
--(NSString *)deviceId{
-    
-    return @"OpenUDID";
-}
--(NSString *)PhoneNumber{
-    //获取电话号码
-    return  [[NSUserDefaults standardUserDefaults] objectForKey:@"SBFormattedPhoneNumber"];
-}
--(NSString *)terminal{
-    size_t size;
-    int nR = sysctlbyname("hw.machine", NULL, &size, NULL, 0);
-    char *machine = (char *)malloc(size);
-    nR = sysctlbyname("hw.machine", machine, &size, NULL, 0);
-    NSString *platform = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
-    free(machine);
-    
-    NSRange loc=[platform rangeOfString:@"iPod"];
-    if(loc.location!=NSNotFound){
-        return @"Pad";
-    }
-    else{
-        return @"Mobile";
-    }
-}
--(NSString *)brand{
-    return @"IPhone";
-}
-
 @end

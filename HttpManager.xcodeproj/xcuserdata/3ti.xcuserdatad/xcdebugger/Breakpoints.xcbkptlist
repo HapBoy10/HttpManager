@@ -8,26 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HttpManager/WYViewController.m"
-         timestampString = "393993935.595708"
+         timestampString = "406437300.370389"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "170"
-         endingLineNumber = "170"
-         landmarkName = "-viewDidLoad"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "HttpManager/WYHttpRequest.m"
-         timestampString = "393996032.471393"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "139"
-         endingLineNumber = "139"
-         landmarkName = "-connection:didFailWithError:"
-         landmarkType = "5">
+         startingLineNumber = "173"
+         endingLineNumber = "173">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
